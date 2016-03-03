@@ -36,8 +36,9 @@
   <ItemGroup>
     <Compile Include="Activations\IActivator.cs" />
     <Compile Include="Activations\LogisticActivator.cs" />
-    <Compile Include="Class1.cs" />
-    <Compile Include="Class2.cs" />
+    <Compile Include="Neural Network.cs" />
+    <Compile Include="Helpers.cs" />
+    <Compile Include="Neuron.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Trainers\LayerCountTrainer.cs" />
   </ItemGroup>
