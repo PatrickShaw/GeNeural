@@ -1,0 +1,4 @@
+C:\Users\eastd\Documents\Visual Studio 2015\Projects\NeuralNetworkLibrary\NeuralNetworkLibrary\bin\Debug\GeNeural.dll
+C:\Users\eastd\Documents\Visual Studio 2015\Projects\NeuralNetworkLibrary\NeuralNetworkLibrary\bin\Debug\GeNeural.pdb
+C:\Users\eastd\Documents\Visual Studio 2015\Projects\NeuralNetworkLibrary\NeuralNetworkLibrary\obj\Debug\GeNeural.dll
+C:\Users\eastd\Documents\Visual Studio 2015\Projects\NeuralNetworkLibrary\NeuralNetworkLibrary\obj\Debug\GeNeural.pdb

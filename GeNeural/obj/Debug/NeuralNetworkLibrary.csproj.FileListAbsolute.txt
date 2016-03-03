@@ -1,0 +1,5 @@
+c:\users\eastd\documents\visual studio 2015\Projects\NeuralNetworkLibrary\NeuralNetworkLibrary\obj\Debug\NeuralNetworkLibrary.csprojResolveAssemblyReference.cache
+c:\users\eastd\documents\visual studio 2015\Projects\NeuralNetworkLibrary\NeuralNetworkLibrary\bin\Debug\NeuralNetworkLibrary.dll
+c:\users\eastd\documents\visual studio 2015\Projects\NeuralNetworkLibrary\NeuralNetworkLibrary\bin\Debug\NeuralNetworkLibrary.pdb
+c:\users\eastd\documents\visual studio 2015\Projects\NeuralNetworkLibrary\NeuralNetworkLibrary\obj\Debug\NeuralNetworkLibrary.dll
+c:\users\eastd\documents\visual studio 2015\Projects\NeuralNetworkLibrary\NeuralNetworkLibrary\obj\Debug\NeuralNetworkLibrary.pdb
