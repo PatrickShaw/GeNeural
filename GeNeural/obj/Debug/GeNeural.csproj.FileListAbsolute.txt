@@ -4,6 +4,6 @@ C:\Users\eastd\Documents\Visual Studio 2015\Projects\NeuralNetworkLibrary\Neural
 C:\Users\eastd\Documents\Visual Studio 2015\Projects\NeuralNetworkLibrary\NeuralNetworkLibrary\obj\Debug\GeNeural.pdb
 C:\Users\eastd\Documents\Visual Studio 2015\Projects\GeNeural\GeNeural\bin\Debug\GeNeural.dll
 C:\Users\eastd\Documents\Visual Studio 2015\Projects\GeNeural\GeNeural\bin\Debug\GeNeural.pdb
-C:\Users\eastd\Documents\Visual Studio 2015\Projects\GeNeural\GeNeural\obj\Debug\GeNeural.csprojResolveAssemblyReference.cache
 C:\Users\eastd\Documents\Visual Studio 2015\Projects\GeNeural\GeNeural\obj\Debug\GeNeural.dll
 C:\Users\eastd\Documents\Visual Studio 2015\Projects\GeNeural\GeNeural\obj\Debug\GeNeural.pdb
+C:\Users\eastd\Documents\Visual Studio 2015\Projects\GeNeural\GeNeural\obj\Debug\GeNeural.csprojResolveAssemblyReference.cache

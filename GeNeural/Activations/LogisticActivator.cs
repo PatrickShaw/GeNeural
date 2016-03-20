@@ -15,7 +15,7 @@ namespace NeuralNetworkLibrary.Activations
 
         public double GetThresholdThatResultsInZeroOutput()
         {
-            return 6;
+            return 6; // Not really but close enough to zero
         }
 
         public double[] GetInactiveNeuronWeights(int weightCount)

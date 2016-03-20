@@ -36,11 +36,25 @@
   <ItemGroup>
     <Compile Include="Activations\IActivator.cs" />
     <Compile Include="Activations\LogisticActivator.cs" />
-    <Compile Include="Neural Network.cs" />
+    <Compile Include="GeneticNeuralNetworkFacilitator.cs" />
+    <Compile Include="Genetic\DisimilarityFunctions.cs" />
+    <Compile Include="Genetic\EfficiencyErrorFunction.cs" />
+    <Compile Include="Genetic\GeneTrainer.cs" />
+    <Compile Include="Genetic\NeuralNetworkGeneTrainer.cs" />
+    <Compile Include="Genetic\NewGenerationFunctions.cs" />
+    <Compile Include="Genetic\OutputAccuracyErrorFunctions.cs" />
+    <Compile Include="Genetic\PartnerSelectionFunction.cs" />
+    <Compile Include="Genetic\ReproductionFunctions.cs" />
+    <Compile Include="Genetic\Trainers.cs" />
+    <Compile Include="IDeepCloneable.cs" />
+    <Compile Include="IGenetic.cs" />
+    <Compile Include="IMutatable.cs" />
+    <Compile Include="NeuralNetwork.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Neuron.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Trainers\LayerCountTrainer.cs" />
+    <Compile Include="Sorter.cs" />
+    <Compile Include="TopologyTrainer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

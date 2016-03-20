@@ -13,24 +13,13 @@ namespace GeNeural
     using System.Text;
     using System.Threading.Tasks;
     public class NotEnoughLayersException : Exception { }
-    public class NeuralNetwork
+    public class NeuralNetwork : IDeepCloneable<NeuralNetwork>
     {
         private const int INPUT_NEURON_WEIGHTS_COUNT = 2;
         private Neuron[][] neurons;
-        private int defaultLayerNodeCount = 5;
-
-        private const double VARIANCE_FACTOR = 0.1;
-
-        private double weightMutationFactorVarianceFactor = VARIANCE_FACTOR;
-        private double weightMutationFactor = 0.01;
-
-        private double layerMutationFactorVarianceFactor = VARIANCE_FACTOR;
-        private double layerMutationFactor = 0.50; // Adds round(-x to x) layers
-
-        private double neuronMutationFactorVarianceFactor = VARIANCE_FACTOR;
-        private double neuronMutationFactor = 0.50; // Adds round(-x to x) neurons per layer
-        public NeuralNetwork(NeuralNetwork network)
-        {
+        
+        protected NeuralNetwork(NeuralNetwork network)
+        {   
             neurons = new Neuron[network.neurons.Length][];
             for (int l = 0; l < neurons.Length; l++)
             {
@@ -40,12 +29,6 @@ namespace GeNeural
                     neurons[l][n] = new Neuron(network.neurons[l][n].Weights);
                 }
             }
-            weightMutationFactorVarianceFactor = network.weightMutationFactorVarianceFactor;
-            layerMutationFactorVarianceFactor = network.layerMutationFactorVarianceFactor;
-            neuronMutationFactorVarianceFactor = network.neuronMutationFactorVarianceFactor;
-            weightMutationFactor = network.weightMutationFactor;
-            layerMutationFactor = network.layerMutationFactor;
-            neuronMutationFactor = network.neuronMutationFactor;
         }
         private double newWeight()
         {
@@ -55,169 +38,32 @@ namespace GeNeural
         {
             get { return neurons.Length; }
         }
-        public NeuralNetwork GeneticallyTrainNewNetwork(double[][] inputs, double[][] desiredOutputs)
+        public Neuron[] GetLayer(int layerIndex)
         {
-            NeuralNetwork[] networks = NewGeneticGeneration();
-            int fittestNetworkIndex = 0;
-            double smallestError = double.MaxValue;
-            for (int n = 0; n < networks.Length; n++)
-            {
-                double totalError = 0;
-                for (int t = 0; t < inputs.Length; t++)
-                {
-                    double[] actualOutputs = networks[n].CalculateOutputs(inputs[t]);
-                    for (int o = 0; o < desiredOutputs.Length; o++)
-                    {
-                        totalError += GetGeneticError(actualOutputs[o], desiredOutputs[t][o]);
-                    }
-                }
-                if (totalError < smallestError)
-                {
-                    fittestNetworkIndex = n;
-                    smallestError = totalError;
-                }
-            }
-            Debug.WriteLine(smallestError);
-            return networks[fittestNetworkIndex];
+            return neurons[layerIndex];
         }
-        public NeuralNetwork[] NewGeneticGeneration(int count = 20)
-        {
-            NeuralNetwork[] networks = Clone(count);
-            int i = 0;
-            foreach (NeuralNetwork network in networks)
-            {
-                //Debug.WriteLine("New mutated child: " + i++);
-                network.Mutate();
-            }
-            return networks;
-        }
-        public NeuralNetwork[] Clone(int count)
-        {
-            NeuralNetwork[] networks = new NeuralNetwork[count];
-            for (int n = 0; n < count; n++)
-            {
-                networks[n] = new NeuralNetwork(this);
-                CalculateOutputs(new double[networks[n].neurons[0].Length]);
-            }
-            return networks;
-        }
-        private double GetGeneticError(double desiredOutput, double actualOutput)
-        {
-            double unsquaredError = desiredOutput - actualOutput;
-            return unsquaredError * unsquaredError;
-        }
-        private double GetTotalError(double[][] inputs, double[][] desiredOutputs)
-        {
-            double totalError = 0;
-            for (int t = 0; t < inputs.Length; t++)
-            {
-                double[] outputs = CalculateOutputs(inputs[t]);
-                for (int o = 0; o < outputs.Length; o++)
-                {
-                    totalError += GetGeneticError(outputs[o], desiredOutputs[t][o]);
-                }
-            }
-            return totalError;
-        }
-        public void Mutate()
-        {
-            if (RandomHelper.rnd.Next(0, 2) == 1)
-                weightMutationFactor += GetDeltaMutationFactor(weightMutationFactorVarianceFactor);
-            else
-                weightMutationFactor -= GetDeltaMutationFactor(weightMutationFactorVarianceFactor);
-
-
-            if (RandomHelper.rnd.Next(0, 2) == 1)
-                layerMutationFactor += GetDeltaMutationFactor(layerMutationFactorVarianceFactor);
-            else
-                layerMutationFactor -= GetDeltaMutationFactor(layerMutationFactorVarianceFactor);
-
-
-            if (RandomHelper.rnd.Next(0, 2) == 1)
-                neuronMutationFactor += GetDeltaMutationFactor(neuronMutationFactorVarianceFactor);
-            else
-                neuronMutationFactor -= GetDeltaMutationFactor(neuronMutationFactorVarianceFactor);
-
-            // Mutate all weights
-            for (int l = 0; l < neurons.Length; l++)
-            {
-                for (int n = 0; n < neurons[l].Length; n++)
-                {
-                    neurons[l][n].MutateWeights(weightMutationFactor);
-                }
-            }
-            // Mutate layers count?
-            MutateHiddenLayerCount();
-            // Mutate neuron count?
-            MutateHiddenNeuronCount();
-        }
-        private static double GetDeltaMutationFactor(double varianceFactor)
-        {
-            return RandomHelper.rnd.NextDouble() * varianceFactor;
-        }
-        private static int GetRandomCount(double mutationFactor)
-        {
-            int count = (int)Math.Round(RandomHelper.rnd.NextDouble() * mutationFactor);
-            //Debug.WriteLine("Count for {0}: {1}",  mutationFactor,count);
-            return count;
-        }
-        public void MutateHiddenLayerCount()
-        {
-            int numberOfLayersToClone = GetRandomCount(layerMutationFactor);
-            //Debug.WriteLine("Creating {0} more layers.", numberOfLayersToClone);
-            if (RandomHelper.rnd.Next(0, 2) == 1)
-            {
-                for (int _ = 0; _ < numberOfLayersToClone; _++)
-                {
-                    int layerIndex = RandomHelper.rnd.Next(1, neurons.Length - 1);
-                    InsertLayer(layerIndex);
-                }
-            }
-            else
-            {
-                for (int _ = 0; _ < numberOfLayersToClone; _++)
-                {
-                    if (neurons.Length <= 2) { break; }
-                    int layerIndex = RandomHelper.rnd.Next(1, neurons.Length - 1);
-                    RemoveLayer(layerIndex);
-                }
-            }
-        }
-        public void MutateHiddenNeuronCount()
-        {
-            int numberOfNeuronsToClone = GetRandomCount(neuronMutationFactor);
-            //Debug.WriteLine("Creating {0} more neurons", numberOfNeuronsToClone);
-            if (RandomHelper.rnd.Next(0, 2) == 1)
-            {
-                for (int _ = 0; _ < numberOfNeuronsToClone; _++)
-                {
-                    if (neurons.Length <= 2)
-                    {
-                        break;
-                    }
-                    int layerIndex = RandomHelper.rnd.Next(1, neurons.Length - 1);
-                    //Debug.WriteLine("New neuron at layer: {0}", layerIndex);
-                    int neuronIndex = RandomHelper.rnd.Next(0, neurons[layerIndex].Length);
-                    SplitNeuronNonDestructive(layerIndex, neuronIndex);
-                }
-            }
-            else
-            {
-                for (int _ = 0; _ < numberOfNeuronsToClone; _++)
-                {
-                    if (neurons.Length <= 2) { break; }
-                    int layerIndex = RandomHelper.rnd.Next(1, neurons.Length - 1);
-                    //Debug.WriteLine("New neuron at layer: {0}", layerIndex);
-                    int neuronIndex = RandomHelper.rnd.Next(0, neurons[layerIndex].Length);
-                    RemoveNeuron(layerIndex, neuronIndex);
-                }
-            }
-        }
-        public static double GetBiasToResultInZero()
+        public double GetBiasToResultInZero()
         {
             return 6;
         }
-        public static double[] GetInactiveNeuronWeights(int weightCount)
+        public double GetInactiveNeuronInputWeight()
+        {
+            return 0;
+        }
+        public void RandomizeWeights(double min= 0, double max = 1)
+        {
+            for(int l = 0;  l < neurons.Length;l++)
+            {
+                for(int n = 0; n < neurons[l].Length;n++)
+                {
+                    for(int w = 0; w < neurons[l][n].Weights.Length;w++)
+                    {
+                        neurons[l][n].SetWeight(w, min+ RandomHelper.rnd.NextDouble() * (max - min));
+                    }
+                }
+            }
+        }
+        public double[] GetInactiveNeuronWeights(int weightCount)
         {
             double[] weights = new double[weightCount];
             weights[0] = GetBiasToResultInZero();
@@ -227,14 +73,14 @@ namespace GeNeural
             }
             return weights;
         }
-        public NeuralNetwork(int[] neuralCounts)
+        public NeuralNetwork(int inputCount, int[] neuralCounts)
         {
-            if (neuralCounts.Length < 2) { throw new Exception(); }
+            if (neuralCounts.Length < 1) { throw new Exception(); }
             neurons = new Neuron[neuralCounts.Length][];
             neurons[0] = new Neuron[neuralCounts[0]];
             for (int n = 0; n < neurons[0].Length; n++)
             {
-                neurons[0][n] = new Neuron(GetInactiveNeuronWeights(2));
+                neurons[0][n] = new Neuron(GetInactiveNeuronWeights(inputCount + 1));
             }
             for (int l = 1; l < neuralCounts.Length; l++)
             {
@@ -257,7 +103,7 @@ namespace GeNeural
             outputs[0] = new double[neurons[0].Length];
             for (int n = 0; n < neurons[0].Length; n++)
             {
-                outputs[0][n] = neurons[0][n].GetOutput(inputs[n]);
+                outputs[0][n] = neurons[0][n].GetOutput(inputs);
             }
             for (int l = 1; l < neurons.Length; l++)
             {
@@ -278,17 +124,18 @@ namespace GeNeural
         /// Each neuron in the layer only acknowledges the input of the neuron from the previous layer with the same index.
         /// Warning: This will affect the output values of the network.
         /// </summary>
-        public void InsertLayer(int layerIndex)
+        public void InsertAfterLayer(int layerIndex)
         {
-            Neuron[] layer = new Neuron[neurons[layerIndex - 1].Length];
+            Neuron[] layer = new Neuron[neurons[layerIndex].Length];
             for (int n = 0; n < layer.Length; n++)
             {
-                double[] inputWeights = new double[neurons[layerIndex - 1].Length + 1];
+                double[] inputWeights = new double[neurons[layerIndex].Length + 1];
+                
                 Neuron newNeuron = new Neuron(inputWeights);
                 newNeuron.SetNeuronWeight(n, 1);
                 layer[n] = newNeuron;
             }
-            InsertLayer(layerIndex, layer);
+            InsertLayer(layerIndex + 1, layer);
         }
         public void RemoveNeuron(int layerIndex, int neuronIndex)
         {
@@ -314,8 +161,15 @@ namespace GeNeural
         }
         public void RemoveLayer(int layerIndex)
         {
-            if (neurons.Length <= 2) { throw new NotEnoughLayersException(); }
-            if (layerIndex != neurons.Length - 1)
+            if (neurons.Length <= 1) { throw new NotEnoughLayersException(); }
+            if (layerIndex == 0)
+            {
+                for (int n2 = 0; n2 < neurons[layerIndex + 1].Length; n2++)
+                {
+                    neurons[layerIndex + 1][n2].SetWeights(new double[neurons[layerIndex][0].Weights.Length ]);
+                }
+            }
+            else if (layerIndex != neurons.Length - 1)
             {
                 for (int n2 = 0; n2 < neurons[layerIndex + 1].Length; n2++)
                 {
@@ -344,6 +198,12 @@ namespace GeNeural
             }
             neurons = newNeuronNetwork;
         }
+        public void ResetMomentum()
+        {
+            foreach (Neuron[] layer in neurons)
+                foreach (Neuron neuron in layer)
+                    neuron.ResetMomentum();
+        }
         public void BackPropagate(double[] inputs, double[] desiredOutputs)
         {
             double[][] outputs = CalculateAllOutputs(inputs);
@@ -369,12 +229,12 @@ namespace GeNeural
                 }
             }
             const double learningFactor = 0.1;
-            for (int n = 0; n < neurons.Length; n++)
+            for (int n = 0; n < neurons[0].Length; n++)
             {
                 neurons[0][n].Weights[0] -= learningFactor * weirdDThing[0][n] * -1;
-                for (int i = 0; i < inputs.Length; i++)
+                for (int n2 = 0; n2 < inputs.Length; n2++)
                 {
-                    neurons[0][n].Weights[1] -= learningFactor * weirdDThing[0][n] * inputs[i];
+                      neurons[0][n].Weights[n2 + 1] -= learningFactor * weirdDThing[0][n] * inputs[n2];
                 }
             }
             for (int l = 1; l < neurons.Length; l++)
@@ -458,9 +318,9 @@ namespace GeNeural
                 AddNonOutputNeuron(layerIndex, addedNeuron, outputWeights);
             }
         }
-        public object Clone()
+        public NeuralNetwork DeepClone()
         {
-            throw new NotImplementedException();
+            return new NeuralNetwork(this);
         }
     }
 }

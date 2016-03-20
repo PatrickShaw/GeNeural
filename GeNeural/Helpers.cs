@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace GeNeural
 {
-    static class RandomHelper
+    public static class RandomHelper
     {
-        public static Random rnd = new Random();
+        public static Random rnd = new Random(0);
     }
     static class MathHelper
     {

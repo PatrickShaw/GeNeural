@@ -29,6 +29,13 @@ namespace GeNeural
 
             }
         }
+        public void ResetMomentum()
+        {
+            for(int w = 0;w < Weights.Length;w++)
+            {
+                prevWeightDiff[w] = 0;
+            }
+        }
         public void AddWeights(params double[] weights)
         {
             double[] newWeights = new double[this.weights.Length + weights.Length];
@@ -83,11 +90,11 @@ namespace GeNeural
             Weights[0] = weight;
         }
         public void SetNeuronWeight(int neuronIndex, double weight)
-        {
+        { 
             Weights[neuronIndex + 1] = weight;
         }
         public double GetOutput(params double[] inputs)
-        {
+        {   
             double output = -weights[0];
             for (int i = 0; i < inputs.Length; i++)
             {
