@@ -29,13 +29,6 @@ namespace GeNeural
 
             }
         }
-        public void ResetMomentum()
-        {
-            for(int w = 0;w < Weights.Length;w++)
-            {
-                prevWeightDiff[w] = 0;
-            }
-        }
         public void AddWeights(params double[] weights)
         {
             double[] newWeights = new double[this.weights.Length + weights.Length];
@@ -101,36 +94,6 @@ namespace GeNeural
                 output += weights[i + 1] * inputs[i];
             }
             return MathHelper.Sigmoid(output);
-        }
-        public void MutateWeights(double weightMutationFactor)
-        {
-            for (int w = 0; w < weights.Length; w++)
-            {
-                double mutationFactor = RandomHelper.rnd.NextDouble() * weightMutationFactor;
-                if (RandomHelper.rnd.Next(0, 2) == 1)
-                    weights[w] += mutationFactor;
-                else
-                    weights[w] -= mutationFactor;
-            }
-        }
-        // Returns weight differences
-        public double[] Backpropagate(double error, double[] inputs)
-        {
-            double learningRate = 0.0001;
-            double[] weightDifferences = new double[weights.Length];
-            //Debug.WriteLine("Weight Diff: " + weightDifferences.Length);
-            weightDifferences[0] = learningRate * error * -1;
-            for (int w = 1; w < weightDifferences.Length; w++)
-            {
-                weightDifferences[w] = learningRate * error * inputs[w - 1] + prevWeightDiff[w] * learningRate / 3.0;
-            }
-            prevWeightDiff = weightDifferences;
-            return weightDifferences;
-        }
-        private double Error(double actualOutput, double desiredOutput)
-        {
-            double difference = (desiredOutput - actualOutput);
-            return 0.5 * difference * difference;
         }
     }
 }

@@ -30,10 +30,6 @@ namespace GeNeural
                 }
             }
         }
-        private double newWeight()
-        {
-            return RandomHelper.rnd.NextDouble();
-        }
         public int LayerCount
         {
             get { return neurons.Length; }
@@ -197,12 +193,6 @@ namespace GeNeural
                 newNeuronNetwork[l] = neurons[l - 1];
             }
             neurons = newNeuronNetwork;
-        }
-        public void ResetMomentum()
-        {
-            foreach (Neuron[] layer in neurons)
-                foreach (Neuron neuron in layer)
-                    neuron.ResetMomentum();
         }
         public void AddOutputNeuron(Neuron neuron)
         {
