@@ -4,30 +4,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace GeNeural.Trainers
+namespace GeNeural.Training.Topology
 {
-    public class TopologyTrainer
+    public sealed class TopologyTrainer
     {
-        public static NeuralNetwork ConfigureTopology(double[][] trainingInputs, double [][] trainingDesiredOutputs, double[][] testInputs, double[][] testDesiredOutputs)
+        public static NeuralNetwork ConfigureTopology(ISupervisedTrainer<NeuralNetwork> trainer, double[][] trainingInputs, double [][] trainingDesiredOutputs, double[][] testInputs, double[][] testDesiredOutputs)
         {
             NeuralNetwork untrainedStubNetwork = new NeuralNetwork(trainingInputs[0].Length,new int[] { trainingInputs[0].Length, trainingDesiredOutputs[0].Length});
             NeuralNetwork trainedStubNetwork = untrainedStubNetwork.DeepClone();
-            Train(trainedStubNetwork, trainingInputs, trainingDesiredOutputs);
+            Train(trainer, trainedStubNetwork, trainingInputs, trainingDesiredOutputs);
             double stubNetworkError = GetTotalError(trainedStubNetwork, trainingInputs, trainingDesiredOutputs) + GetTotalError(trainedStubNetwork, testInputs, testDesiredOutputs);
             while(true)
             {
                 NeuralNetwork untrainedLayerNetwork = untrainedStubNetwork.DeepClone();
                 untrainedLayerNetwork.InsertAfterLayer(untrainedLayerNetwork.LayerCount - 1);
                 NeuralNetwork trainedLayerNetwork = untrainedStubNetwork.DeepClone();
-                Train(trainedLayerNetwork, trainingInputs, trainingDesiredOutputs);
+                Train(trainer, trainedLayerNetwork, trainingInputs, trainingDesiredOutputs);
                 double layerNetworkError = GetTotalError(trainedLayerNetwork, trainingInputs, trainingDesiredOutputs) + GetTotalError(trainedLayerNetwork, testInputs, testDesiredOutputs);
                 while(true)
                 {
                     NeuralNetwork untrainedNeuronNetwork = untrainedLayerNetwork.DeepClone();
                     untrainedNeuronNetwork.AddNeuronNonDestructive(untrainedNeuronNetwork.LayerCount - 2);
                     NeuralNetwork trainedNeuronNetwork = untrainedNeuronNetwork.DeepClone();
-                    Train(trainedNeuronNetwork, trainingInputs, trainingDesiredOutputs);
+                    Train(trainer, trainedNeuronNetwork, trainingInputs, trainingDesiredOutputs);
                     double neuronNetworkError = GetTotalError(trainedNeuronNetwork, trainingInputs, trainingDesiredOutputs);
                     if(neuronNetworkError < layerNetworkError)
                     {
@@ -69,7 +68,7 @@ namespace GeNeural.Trainers
             double difference = desiredOutput - actualOutput;
             return difference * difference;
         }
-        public static void Train(NeuralNetwork network, double[][] inputs, double[][] desiredOutputs)
+        public static void Train<T>(ISupervisedTrainer<T> trainer, T network, double[][] inputs, double[][] desiredOutputs) where T : NeuralNetwork
         {
 
             for (int _ = 0; _ < 100; _++)
@@ -78,7 +77,7 @@ namespace GeNeural.Trainers
                 {
                     for (int i = 0; i < 50; i++)
                     {
-                        network.BackPropagate(inputs[t], desiredOutputs[t]);
+                        trainer.Train(network, inputs[t], desiredOutputs[t]);
                     }
                 }
             }
