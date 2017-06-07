@@ -13,7 +13,7 @@ namespace GeNeural
     using System.Text;
     using System.Threading.Tasks;
     public class NotEnoughLayersException : Exception { }
-    public class NeuralNetwork : IDeepCloneable<NeuralNetwork>
+    public class NeuralNetwork : IDeepCloneable<NeuralNetwork>, INeuralNetwork
     {
         private const int INPUT_NEURON_WEIGHTS_COUNT = 2;
         private Neuron[][] neurons;
@@ -97,7 +97,7 @@ namespace GeNeural
             double[][] outputs = CalculateAllOutputs(inputs);
             return outputs[outputs.Length - 1];
         }
-        private double[][] CalculateAllOutputs(double[] inputs)
+        public double[][] CalculateAllOutputs(double[] inputs)
         {
             double[][] outputs = new double[neurons.Length][];
             outputs[0] = new double[neurons[0].Length];
@@ -203,51 +203,6 @@ namespace GeNeural
             foreach (Neuron[] layer in neurons)
                 foreach (Neuron neuron in layer)
                     neuron.ResetMomentum();
-        }
-        public void BackPropagate(double[] inputs, double[] desiredOutputs)
-        {
-            double[][] outputs = CalculateAllOutputs(inputs);
-            double[][] weirdDThing = new double[outputs.Length][];
-            for (int l = 0; l < outputs.Length; l++)
-                weirdDThing[l] = new double[outputs[l].Length];
-            for (int n = 0; n < outputs[outputs.Length - 1].Length; n++)
-            {
-                double neuronOutput = outputs[outputs.Length - 1][n];
-                weirdDThing[weirdDThing.Length - 1][n] = (neuronOutput - desiredOutputs[n]) * neuronOutput * (1 - neuronOutput);
-            }
-            for (int l = outputs.Length - 2; l >= 0; l--)
-            {
-                for (int n = 0; n < neurons[l].Length; n++)
-                {
-                    double neuronOutput = outputs[l][n];
-                    double sumThing = 0;
-                    for (int n2 = 0; n2 < neurons[l + 1].Length; n2++)
-                    {
-                        sumThing += weirdDThing[l + 1][n2] * neurons[l + 1][n2].Weights[n];
-                    }
-                    weirdDThing[l][n] = sumThing * neuronOutput * (1 - neuronOutput);
-                }
-            }
-            const double learningFactor = 0.1;
-            for (int n = 0; n < neurons[0].Length; n++)
-            {
-                neurons[0][n].Weights[0] -= learningFactor * weirdDThing[0][n] * -1;
-                for (int n2 = 0; n2 < inputs.Length; n2++)
-                {
-                      neurons[0][n].Weights[n2 + 1] -= learningFactor * weirdDThing[0][n] * inputs[n2];
-                }
-            }
-            for (int l = 1; l < neurons.Length; l++)
-            {
-                for (int n = 0; n < neurons[l].Length; n++)
-                {
-                    neurons[l][n].Weights[0] -= learningFactor * weirdDThing[l][n] * -1;
-                    for (int n2 = 0; n2 < neurons[l - 1].Length; n2++)
-                    {
-                        neurons[l][n].Weights[n2 + 1] -= learningFactor * weirdDThing[l][n] * outputs[l - 1][n2];
-                    }
-                }
-            }
         }
         public void AddOutputNeuron(Neuron neuron)
         {

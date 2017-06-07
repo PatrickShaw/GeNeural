@@ -18,7 +18,7 @@ namespace GeNeural
 
         private double neuronMutationFactorVarianceFactor = 0.01;
         private double neuronMutationFactor = 0.50; // Adds round(-x to x) neurons per layer
-        NeuralNetwork network;
+        private NeuralNetwork network;
         public GeneticNeuralNetworkFacilitator(NeuralNetwork network)
         {
             this.network = network;

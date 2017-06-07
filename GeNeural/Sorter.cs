@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GeNeural
 {
-    static class Sorter
+    public static class Sorter
     {
         private static void Swap<T>(T[] array, int i1, int i2)
         {
