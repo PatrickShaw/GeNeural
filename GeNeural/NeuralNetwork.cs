@@ -25,35 +25,6 @@ namespace GeNeural {
                 }
             }
         }
-        public int LayerCount {
-            get { return neurons.Length; }
-        }
-        public Neuron[] GetLayer(int layerIndex) {
-            return neurons[layerIndex];
-        }
-        public double GetBiasToResultInZero() {
-            return 6;
-        }
-        public double GetInactiveNeuronInputWeight() {
-            return 0;
-        }
-        public void RandomizeWeights(double min = 0, double max = 1) {
-            for (int l = 0; l < neurons.Length; l++) {
-                for (int n = 0; n < neurons[l].Length; n++) {
-                    for (int w = 0; w < neurons[l][n].Weights.Length; w++) {
-                        neurons[l][n].SetWeight(w, min + RandomHelper.rnd.NextDouble() * (max - min));
-                    }
-                }
-            }
-        }
-        public double[] GetInactiveNeuronWeights(int weightCount) {
-            double[] weights = new double[weightCount];
-            weights[0] = GetBiasToResultInZero();
-            for (int w = 1; w < weightCount; w++) {
-                weights[w] = 0;
-            }
-            return weights;
-        }
         public NeuralNetwork(int inputCount, int[] neuralCounts) {
             if (neuralCounts.Length < 1) { throw new Exception(); }
             neurons = new Neuron[neuralCounts.Length][];
@@ -68,6 +39,35 @@ namespace GeNeural {
                     neurons[l][n] = new Neuron(weights);
                 }
             }
+        }
+        public int LayerCount {
+            get { return neurons.Length; }
+        }
+        public Neuron[] GetLayer(int layerIndex) {
+            return neurons[layerIndex];
+        }
+        public double GetBiasToResultInZero() {
+            return 6;
+        }
+        public double GetInactiveNeuronInputWeight() {
+            return 0;
+        }
+        public void RandomizeWeights(Random random, double min = 0, double max = 1) {
+            for (int l = 0; l < neurons.Length; l++) {
+                for (int n = 0; n < neurons[l].Length; n++) {
+                    for (int w = 0; w < neurons[l][n].Weights.Length; w++) {
+                        neurons[l][n].SetWeight(w, min + random.NextDouble() * (max - min));
+                    }
+                }
+            }
+        }
+        public double[] GetInactiveNeuronWeights(int weightCount) {
+            double[] weights = new double[weightCount];
+            weights[0] = GetBiasToResultInZero();
+            for (int w = 1; w < weightCount; w++) {
+                weights[w] = 0;
+            }
+            return weights;
         }
         public double[] CalculateOutputs(double[] inputs) {
             double[][] outputs = CalculateAllOutputs(inputs);

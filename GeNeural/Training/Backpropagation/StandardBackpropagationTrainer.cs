@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GeNeural.Training.Backpropagation {
     public sealed class StandardBackpropagationTrainer : ISupervisedTrainer<NeuralNetwork> {
-        public void Backpropagation(NeuralNetwork neuralNetwork, double[] inputs, double[] desiredOutputs) {
+        public void Backpropagation(NeuralNetwork neuralNetwork, double[] inputs, double[] desiredOutputs, double learningRateFactor = 0.1) {
             // We need to calculate the current outputs, given a set of inputs in order to do backpropagation.
             double[][] outputs = neuralNetwork.CalculateAllOutputs(inputs);
             // TODO: Revisit 'weirdDThing'.
@@ -30,14 +30,14 @@ namespace GeNeural.Training.Backpropagation {
                     weirdDThing[l][n] = sumThing * neuronOutput * (1 - neuronOutput);
                 }
             }
-            const double learningFactor = 0.1;
             // Now we actually modify the the weights of the neurons.
             // The first layer is a special case it doesn't have any previous layers to deal with.
             Neuron[] firstLayer = neuralNetwork.GetLayer(0);
             for (int n = 0; n < firstLayer.Length; n++) {
-                firstLayer[n].Weights[0] -= learningFactor * weirdDThing[0][n] * -1;
+                // The threshold/bias takes a -1 as input.
+                firstLayer[n].Weights[0] -= learningRateFactor * weirdDThing[0][n] * -1;
                 for (int n2 = 0; n2 < inputs.Length; n2++) {
-                    firstLayer[n].Weights[n2 + 1] -= learningFactor * weirdDThing[0][n] * inputs[n2];
+                    firstLayer[n].Weights[n2 + 1] -= learningRateFactor * weirdDThing[0][n] * inputs[n2];
                 }
             }
             // Now modify the weights for the other neural networks.
@@ -45,9 +45,9 @@ namespace GeNeural.Training.Backpropagation {
                 Neuron[] currentLayer = neuralNetwork.GetLayer(l);
                 Neuron[] previousLayer = neuralNetwork.GetLayer(l - 1);
                 for (int n = 0; n < currentLayer.Length; n++) {
-                    currentLayer[n].Weights[0] -= learningFactor * weirdDThing[l][n] * -1;
+                    currentLayer[n].Weights[0] -= learningRateFactor * weirdDThing[l][n] * -1;
                     for (int n2 = 0; n2 < previousLayer.Length; n2++) {
-                        currentLayer[n].Weights[n2 + 1] -= learningFactor * weirdDThing[l][n] * outputs[l - 1][n2];
+                        currentLayer[n].Weights[n2 + 1] -= learningRateFactor * weirdDThing[l][n] * outputs[l - 1][n2];
                     }
                 }
             }

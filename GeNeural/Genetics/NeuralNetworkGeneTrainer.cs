@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeNeural.Genetic {
+namespace GeNeural.Genetics {
     public class NeuralNetworkGeneTrainer : GeneTrainer<GeneticNeuralNetworkFacilitator, NeuralNetwork> {
         public NeuralNetworkGeneTrainer(GeneticNeuralNetworkFacilitator[] initialPopulation, ReproductionFunction<GeneticNeuralNetworkFacilitator> reproductionFunction, GeneticDisimilarityFunction<GeneticNeuralNetworkFacilitator> geneticDisimilarityFunction, AttributeDisimilarityFunction attributeDisimilarityFunction, ReproduceNewGeneration<GeneticNeuralNetworkFacilitator> newGenerationFunction, OutputAccuracyErrorFunction getOutputAccuracyError, SelectPartnerFunction<GeneticNeuralNetworkFacilitator> selectPartnerFunction, EfficiencyErrorFunction efficiencyErrorFunction)
             : base(initialPopulation, reproductionFunction, geneticDisimilarityFunction, attributeDisimilarityFunction, newGenerationFunction, getOutputAccuracyError, selectPartnerFunction, efficiencyErrorFunction) { }
@@ -30,7 +30,7 @@ namespace GeNeural.Genetic {
                 unfitnessOfPopulation[p] = unfitness;
                 averageUnfitness += unfitness;
             }
-            averageUnfitness /= (double)population.Length;
+            averageUnfitness /= population.Length;
             Debug.WriteLine(averageUnfitness);
             return unfitnessOfPopulation;
         }

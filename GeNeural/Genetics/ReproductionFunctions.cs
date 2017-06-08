@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace GeNeural.Genetic {
+namespace GeNeural.Genetics {
     public static partial class Preset {
         public static class Reproduction {
             public static T AlwaysCloneFirstEntity<T>(T network1, T network2) where T : IDeepCloneable<T> {
@@ -12,14 +12,14 @@ namespace GeNeural.Genetic {
             /// <summary>
             /// Really just a testing function. 50% chance to clone network1, 50% chance to clone network2.
             /// </summary>
-            public static T CloningCoinToss<T>(T network1, T network2) where T : IDeepCloneable<T> {
-                return PickAttributeCoinToss(network1.DeepClone(), network2.DeepClone());
+            public static T CloningCoinToss<T>(Random random, T network1, T network2) where T : IDeepCloneable<T> {
+                return PickAttributeCoinToss(random, network1.DeepClone(), network2.DeepClone());
             }
-            public static GeneticNeuralNetworkFacilitator DefaultReproduction(GeneticNeuralNetworkFacilitator network1, GeneticNeuralNetworkFacilitator network2) {
+            public static GeneticNeuralNetworkFacilitator DefaultReproduction(Random random, GeneticNeuralNetworkFacilitator network1, GeneticNeuralNetworkFacilitator network2) {
                 // Pick a parent to clone
                 GeneticNeuralNetworkFacilitator chosenClonerParent;
                 GeneticNeuralNetworkFacilitator mergerParent;
-                if (RandomHelper.rnd.Next(0, 2) == 1) {
+                if (random.Next(0, 2) == 1) {
                     chosenClonerParent = network1;
                     mergerParent = network2;
                 } else {
@@ -28,14 +28,14 @@ namespace GeNeural.Genetic {
                 }
                 GeneticNeuralNetworkFacilitator baby = chosenClonerParent.DeepClone();
 
-                baby.LayerMutationFactor = PickAttributeCoinToss(network1.LayerMutationFactor, network2.LayerMutationFactor);
-                baby.LayerMutationFactorVarianceFactor = PickAttributeCoinToss(network1.LayerMutationFactorVarianceFactor, network2.LayerMutationFactorVarianceFactor);
+                baby.LayerMutationFactor = PickAttributeCoinToss(random, network1.LayerMutationFactor, network2.LayerMutationFactor);
+                baby.LayerMutationFactorVarianceFactor = PickAttributeCoinToss(random, network1.LayerMutationFactorVarianceFactor, network2.LayerMutationFactorVarianceFactor);
 
-                baby.WeightMutationFactor = PickAttributeCoinToss(network1.WeightMutationFactor, network2.WeightMutationFactor);
-                baby.WeightMutationFactorVarianceFactor = PickAttributeCoinToss(network1.WeightMutationFactorVarianceFactor, network2.WeightMutationFactorVarianceFactor);
+                baby.WeightMutationFactor = PickAttributeCoinToss(random, network1.WeightMutationFactor, network2.WeightMutationFactor);
+                baby.WeightMutationFactorVarianceFactor = PickAttributeCoinToss(random, network1.WeightMutationFactorVarianceFactor, network2.WeightMutationFactorVarianceFactor);
 
-                baby.NeuronMutationFactor = PickAttributeCoinToss(network1.NeuronMutationFactor, network2.NeuronMutationFactor);
-                baby.NeuronMutationFactorVarianceFactor = PickAttributeCoinToss(network1.NeuronMutationFactorVarianceFactor, network2.NeuronMutationFactorVarianceFactor);
+                baby.NeuronMutationFactor = PickAttributeCoinToss(random, network1.NeuronMutationFactor, network2.NeuronMutationFactor);
+                baby.NeuronMutationFactorVarianceFactor = PickAttributeCoinToss(random, network1.NeuronMutationFactorVarianceFactor, network2.NeuronMutationFactorVarianceFactor);
 
                 NeuralNetwork babyNetwork = baby.Network;
                 NeuralNetwork mergingNetwork = mergerParent.Network;
@@ -60,8 +60,8 @@ namespace GeNeural.Genetic {
                 }
                 return baby;
             }
-            private static T PickAttributeCoinToss<T>(T heads, T tails) {
-                return RandomHelper.rnd.Next(0, 2) == 1 ? heads : tails;
+            private static T PickAttributeCoinToss<T>(Random random, T heads, T tails) {
+                return random.Next(0, 2) == 1 ? heads : tails;
             }
         }
     }
