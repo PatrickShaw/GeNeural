@@ -21,12 +21,10 @@ namespace GeNeural.Genetic {
                     attaction[i] = fitness[i] * (1.0 / (geneticDifference[i] + 1));
                 }
                 Sorter.QuickSort(geneticDifference, attaction);
-                int _ = 0;
-                while (true) {
+                for (int p = 0; true; p = (1 + p) % population.Length) {
                     if (RandomHelper.rnd.NextDouble() < 1 / (double)population.Length) {
-                        return population[_];
+                        return population[p];
                     }
-                    _ = (_ + 1) % population.Length;
                 }
             }
         }

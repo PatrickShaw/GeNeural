@@ -12,7 +12,9 @@ namespace GeNeural.Genetic {
             NeuralNetwork fittestNetwork = null;
             double fittestTotalError = double.MaxValue;
             for (int _ = 0; _ < populationCount; _++) {
-                if ((_ % 100000) == 0) { Debug.WriteLine(_); }
+                if ((_ % 100000) == 0) {
+                    Debug.WriteLine(_);
+                }
                 NeuralNetwork network = new NeuralNetwork(testInputs[0].Length, neuralCounts);
                 double maxWeightValue = Math.Max(network.GetBiasToResultInZero(), network.GetInactiveNeuronInputWeight());
                 network.RandomizeWeights(-maxWeightValue, maxWeightValue);

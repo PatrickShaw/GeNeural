@@ -12,8 +12,7 @@ namespace GeNeural.Genetic {
             /// </summary>
             /// <returns></returns>
             public static double FlatError(double desiredOutput, double actualOutput) {
-                double error = Math.Abs(desiredOutput - actualOutput);
-                return error;
+                return Math.Abs(desiredOutput - actualOutput);
             }
             /// <summary>
             /// A squared linear error. The further apart the desired and actual outputs are, the more rapidly the error will increase.

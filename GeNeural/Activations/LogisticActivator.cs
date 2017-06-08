@@ -17,8 +17,9 @@ namespace NeuralNetworkLibrary.Activations {
         public double[] GetInactiveNeuronWeights(int weightCount) {
             double[] weights = new double[weightCount];
             weights[0] = GetThresholdThatResultsInZeroOutput();
-            for (int w = 1; w < weights.Length; w++)
+            for (int w = 1; w < weights.Length; w++) {
                 weights[w] = 0;
+            }
             return weights;
         }
     }

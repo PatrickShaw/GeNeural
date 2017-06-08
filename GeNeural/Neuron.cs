@@ -44,10 +44,12 @@ namespace GeNeural {
         public void RemoveNeuronWeight(int neuronIndex) {
             int weightIndex = neuronIndex + 1;
             double[] newWeights = new double[weights.Length - 1];
-            for (int w = 0; w < weightIndex; w++)
+            for (int w = 0; w < weightIndex; w++) {
                 newWeights[w] = weights[w];
-            for (int w = weightIndex + 1; w < weights.Length; w++)
+            }
+            for (int w = weightIndex + 1; w < weights.Length; w++) {
                 newWeights[w - 1] = weights[w];
+            }
             Weights = newWeights;
         }
         public void SetWeights(double[] weights) {
