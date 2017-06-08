@@ -64,7 +64,6 @@ namespace GeNeural {
 
         public void Mutate(double mutationFactor = 1) {
             weightMutationFactor *= GetMultiplicativeMutableFactor(weightMutationFactorVarianceFactor) + GetDeltaMutatableValue(0.000000000000001);
-            //weightMutationFactor += GetDeltaMutatableValue(weightMutationFactorVarianceFactor);
             layerMutationFactor *= GetMultiplicativeMutableFactor(layerMutationFactorVarianceFactor) + GetDeltaMutatableValue(0.000000000000001);
             neuronMutationFactor *= GetMultiplicativeMutableFactor(neuronMutationFactorVarianceFactor) + GetDeltaMutatableValue(0.000000000000001);
 
@@ -81,14 +80,12 @@ namespace GeNeural {
                 for (int _ = 0; _ < numberOfLayersToClone; _++) {
                     int layerIndex = RandomHelper.rnd.Next(0, network.LayerCount - 1);
                     network.InsertAfterLayer(layerIndex);
-                    // Debug.WriteLine("RAWR");
                 }
             } else {
                 for (int _ = 0; _ < numberOfLayersToClone; _++) {
                     if (network.LayerCount <= 1) { break; }
                     int layerIndex = RandomHelper.rnd.Next(0, network.LayerCount - 1);
                     network.RemoveLayer(layerIndex);
-                    // Debug.WriteLine("QEAEAR");
                 }
             }
         }
