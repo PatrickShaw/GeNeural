@@ -4,10 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NeuralNetworkLibrary.Activations
-{
-    interface IActivator
-    {
+namespace NeuralNetworkLibrary.Activations {
+    interface IActivator {
         double ActivationFunction(double x);
         double GetThresholdThatResultsInZeroOutput();
         double[] GetInactiveNeuronWeights(int weightCount);

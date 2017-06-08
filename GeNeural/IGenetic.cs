@@ -6,10 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeNeural
-{
-    public interface IGeneticVarianceFunction
-    {
+namespace GeNeural {
+    public interface IGeneticVarianceFunction {
         double GetGeneticVariance(double value1, double value2);
     }
 }
