@@ -1,7 +1,5 @@
-﻿namespace GeNeural.Training
-{
-    public interface ISupervisedTrainer<T>
-    {
+﻿namespace GeNeural.Training {
+    public interface ISupervisedTrainer<T> {
         /// <summary>
         /// Trains a given trainable entity to output a certain set of outputs, given a certain set of inputs.
         /// </summary>

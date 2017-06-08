@@ -4,10 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeNeural
-{
-    public interface IDeepCloneable<T>
-    {
+namespace GeNeural {
+    public interface IDeepCloneable<T> {
         T DeepClone();
     }
 }
