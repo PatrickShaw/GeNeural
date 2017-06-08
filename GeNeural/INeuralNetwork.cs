@@ -10,7 +10,7 @@ namespace GeNeural {
     /// <summary>
     /// 
     /// </summary>
-    interface INeuralNetwork {
+    public interface INeuralNetwork {
         double[] CalculateOutputs(double[] inputs);
     }
 }

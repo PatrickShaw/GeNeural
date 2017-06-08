@@ -6,42 +6,57 @@ using System.Text;
 using System.Threading.Tasks;
 namespace GeNeural.Genetics {
     public class GeneticNeuralNetworkFacilitator : IMutatable, IDeepCloneable<GeneticNeuralNetworkFacilitator> {
-        private const double VARIANCE_FACTOR = 0.01;
+        private double weightMutationVariance;
+        private double weightMutationFactor;
 
-        private double weightMutationFactorVarianceFactor = 0.1;
-        private double weightMutationFactor = 0.1;
+        private double layerMutationVariance;
+        // Adds round(-x to x) layers
+        private double layerMutationFactor; 
 
-        private double layerMutationFactorVarianceFactor = 0.01;
-        private double layerMutationFactor = 0.50; // Adds round(-x to x) layers
-
-        private double neuronMutationFactorVarianceFactor = 0.01;
-        private double neuronMutationFactor = 0.50; // Adds round(-x to x) neurons per layer
+        private double neuronMutationVariance;
+        // Adds round(-x to x) neurons per layer
+        private double neuronMutationFactor;
         private NeuralNetwork network;
         private Random rnd;
-        public GeneticNeuralNetworkFacilitator(NeuralNetwork network, Random random) {
+        public GeneticNeuralNetworkFacilitator(
+            NeuralNetwork network, 
+            Random random, 
+            double weightMutationVariance = 0.1,
+            double weightMutationFactor = 0.1,
+            double layerMutationVariance = 0.5,
+            double layerMutationFactor = 0.01,
+            double neuronMutationVariance = 0.01,
+            double neuronMutationFactor = 0.5
+        ) {
             this.network = network;
             this.rnd = random;
+            this.weightMutationVariance = weightMutationVariance;
+            this.weightMutationFactor = weightMutationFactor;
+            this.layerMutationVariance = layerMutationVariance;
+            this.layerMutationFactor = layerMutationFactor;
+            this.neuronMutationVariance = neuronMutationVariance;
+            this.neuronMutationFactor = neuronMutationFactor;
         }
         protected GeneticNeuralNetworkFacilitator(GeneticNeuralNetworkFacilitator parent) {
             network = parent.network.DeepClone();
-            weightMutationFactorVarianceFactor = parent.weightMutationFactorVarianceFactor;
-            layerMutationFactorVarianceFactor = parent.layerMutationFactorVarianceFactor;
-            neuronMutationFactorVarianceFactor = parent.neuronMutationFactorVarianceFactor;
+            weightMutationVariance = parent.weightMutationVariance;
+            layerMutationVariance = parent.layerMutationVariance;
+            neuronMutationVariance = parent.neuronMutationVariance;
             weightMutationFactor = parent.weightMutationFactor;
             layerMutationFactor = parent.layerMutationFactor;
             neuronMutationFactor = parent.neuronMutationFactor;
         }
         public double WeightMutationFactorVarianceFactor {
-            get { return weightMutationFactorVarianceFactor; }
-            set { weightMutationFactorVarianceFactor = value; }
+            get { return weightMutationVariance; }
+            set { weightMutationVariance = value; }
         }
         public double LayerMutationFactorVarianceFactor {
-            get { return layerMutationFactorVarianceFactor; }
-            set { layerMutationFactorVarianceFactor = value; }
+            get { return layerMutationVariance; }
+            set { layerMutationVariance = value; }
         }
         public double NeuronMutationFactorVarianceFactor {
-            get { return neuronMutationFactorVarianceFactor; }
-            set { neuronMutationFactorVarianceFactor = value; }
+            get { return neuronMutationVariance; }
+            set { neuronMutationVariance = value; }
         }
         public double WeightMutationFactor {
             get { return weightMutationFactor; }
@@ -65,9 +80,9 @@ namespace GeNeural.Genetics {
         }
 
         public void Mutate(double mutationFactor = 1) {
-            weightMutationFactor *= GetMultiplicativeMutableFactor(weightMutationFactorVarianceFactor) + GetDeltaMutatableValue(0.000000000000001);
-            layerMutationFactor *= GetMultiplicativeMutableFactor(layerMutationFactorVarianceFactor) + GetDeltaMutatableValue(0.000000000000001);
-            neuronMutationFactor *= GetMultiplicativeMutableFactor(neuronMutationFactorVarianceFactor) + GetDeltaMutatableValue(0.000000000000001);
+            weightMutationFactor *= GetMultiplicativeMutableFactor(weightMutationVariance) + GetDeltaMutatableValue(0.000000000000001);
+            layerMutationFactor *= GetMultiplicativeMutableFactor(layerMutationVariance) + GetDeltaMutatableValue(0.000000000000001);
+            neuronMutationFactor *= GetMultiplicativeMutableFactor(neuronMutationVariance) + GetDeltaMutatableValue(0.000000000000001);
 
             MutateWeights();
             // Mutate layers count

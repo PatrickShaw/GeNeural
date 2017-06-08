@@ -74,7 +74,7 @@ namespace GeNeural {
             double output = -weights[0];
             for (int i = 0; i < inputs.Length; i++) {
                 output += weights[i + 1] * inputs[i];
-            }
+            }   
             return MathHelper.Sigmoid(output);
         }
     }
