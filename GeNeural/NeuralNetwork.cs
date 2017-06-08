@@ -135,11 +135,12 @@ namespace GeNeural {
                 }
             }
             Neuron[][] newNeuronNetwork = new Neuron[neurons.Length - 1][];
-            for (int l = 0; l < layerIndex; l++)
+            for (int l = 0; l < layerIndex; l++) {
                 newNeuronNetwork[l] = neurons[l];
-            for (int l = layerIndex + 1; l < neurons.Length; l++)
+            }
+            for (int l = layerIndex + 1; l < neurons.Length; l++) {
                 newNeuronNetwork[l - 1] = neurons[l];
-
+            }
             neurons = newNeuronNetwork;
         }
         public void InsertLayer(int layerIndex, Neuron[] layer) {
