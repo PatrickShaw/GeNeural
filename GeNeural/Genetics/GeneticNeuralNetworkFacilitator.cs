@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace GeNeural {
+namespace GeNeural.Genetics {
     public class GeneticNeuralNetworkFacilitator : IMutatable, IDeepCloneable<GeneticNeuralNetworkFacilitator> {
         private const double VARIANCE_FACTOR = 0.01;
 
@@ -17,8 +17,10 @@ namespace GeNeural {
         private double neuronMutationFactorVarianceFactor = 0.01;
         private double neuronMutationFactor = 0.50; // Adds round(-x to x) neurons per layer
         private NeuralNetwork network;
-        public GeneticNeuralNetworkFacilitator(NeuralNetwork network) {
+        private Random rnd;
+        public GeneticNeuralNetworkFacilitator(NeuralNetwork network, Random random) {
             this.network = network;
+            this.rnd = random;
         }
         protected GeneticNeuralNetworkFacilitator(GeneticNeuralNetworkFacilitator parent) {
             network = parent.network.DeepClone();
@@ -76,15 +78,15 @@ namespace GeNeural {
         public void MutateHiddenLayerCount() {
             int numberOfLayersToClone = GetRandomCount(layerMutationFactor);
             //Debug.WriteLine("Creating {0} more layers.", numberOfLayersToClone);
-            if (RandomHelper.rnd.Next(0, 2) == 1) {
+            if (this.rnd.Next(0, 2) == 1) {
                 for (int _ = 0; _ < numberOfLayersToClone; _++) {
-                    int layerIndex = RandomHelper.rnd.Next(0, network.LayerCount - 1);
+                    int layerIndex = this.rnd.Next(0, network.LayerCount - 1);
                     network.InsertAfterLayer(layerIndex);
                 }
             } else {
                 for (int _ = 0; _ < numberOfLayersToClone; _++) {
                     if (network.LayerCount <= 1) { break; }
-                    int layerIndex = RandomHelper.rnd.Next(0, network.LayerCount - 1);
+                    int layerIndex = this.rnd.Next(0, network.LayerCount - 1);
                     network.RemoveLayer(layerIndex);
                 }
             }
@@ -92,22 +94,22 @@ namespace GeNeural {
         public void MutateHiddenNeuronCount() {
             int numberOfNeuronsToClone = GetRandomCount(neuronMutationFactor);
             //Debug.WriteLine("Creating {0} more neurons", numberOfNeuronsToClone);
-            if (RandomHelper.rnd.Next(0, 2) == 1) {
+            if (this.rnd.Next(0, 2) == 1) {
                 for (int _ = 0; _ < numberOfNeuronsToClone; _++) {
                     if (network.LayerCount <= 1) {
                         break;
                     }
-                    int layerIndex = RandomHelper.rnd.Next(0, network.LayerCount - 1);
+                    int layerIndex = this.rnd.Next(0, network.LayerCount - 1);
                     //Debug.WriteLine("New neuron at layer: {0}", layerIndex);
-                    int neuronIndex = RandomHelper.rnd.Next(0, network.GetLayer(layerIndex).Length);
+                    int neuronIndex = this.rnd.Next(0, network.GetLayer(layerIndex).Length);
                     network.SplitNeuronNonDestructive(layerIndex, neuronIndex);
                 }
             } else {
                 for (int _ = 0; _ < numberOfNeuronsToClone; _++) {
                     if (network.LayerCount <= 1) { break; }
-                    int layerIndex = RandomHelper.rnd.Next(0, network.LayerCount - 1);
+                    int layerIndex = this.rnd.Next(0, network.LayerCount - 1);
                     //Debug.WriteLine("New neuron at layer: {0}", layerIndex);
-                    int neuronIndex = RandomHelper.rnd.Next(0, network.GetLayer(layerIndex).Length);
+                    int neuronIndex = this.rnd.Next(0, network.GetLayer(layerIndex).Length);
                     network.RemoveNeuron(layerIndex, neuronIndex);
                 }
             }
@@ -122,22 +124,20 @@ namespace GeNeural {
                         double delta = GetDeltaMutatableValue(weightMutationFactor);
                         weight += delta;
                         //Debug.WriteLine("Changing weight by: {0}", delta);
-                        //weight += 0.05 + 0.1 * RandomHelper.rnd.NextDouble();//delta;
-                        //weight += RandomHelper.rnd.NextDouble();
                         neuron.SetWeight(w, weight);
                     }
                 }
             }
         }
         public double GetMultiplicativeMutableFactor(double mutableFactor) {
-            return 1 + (mutableFactor - RandomHelper.rnd.NextDouble() * mutableFactor * 2.0);
+            return 1 + (mutableFactor - this.rnd.NextDouble() * mutableFactor * 2.0);
         }
         public int GetRandomCount(double mutationFactor) {
-            return (int)Math.Round(RandomHelper.rnd.NextDouble() * mutationFactor);
+            return (int)Math.Round(this.rnd.NextDouble() * mutationFactor);
         }
         public double GetDeltaMutatableValue(double mutationFactor) {
-            double delta = RandomHelper.rnd.NextDouble() * mutationFactor;
-            if (RandomHelper.rnd.Next(0, 2) == 1)
+            double delta = this.rnd.NextDouble() * mutationFactor;
+            if (this.rnd.Next(0, 2) == 1)
                 return delta;
             else
                 return -delta;

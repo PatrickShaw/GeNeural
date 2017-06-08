@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeNeural.Genetic {
+namespace GeNeural.Genetics {
     public static partial class Preset {
         public static class Generation {
             public static T[] SimpleProbabalisticNewGeneration<T>
                 (
+                    Random rnd,
                     T[] oldGeneration,
                     double[] unfitnessOfPopulation,
                     int newPopulationCount,
@@ -26,7 +27,7 @@ namespace GeNeural.Genetic {
                 int i = 0;
                 // NOTE: When can definately optimize this algoirthm as it is effectively a recurrence equation
                 while (count < newPopulationCount) {
-                    if (RandomHelper.rnd.NextDouble() < 1.0 / (double)newPopulationCount) {
+                    if (rnd.NextDouble() < 1.0 / newPopulationCount) {
                         T chosenOne = oldGeneration[i];
                         double[] geneticDifference = new double[oldGeneration.Length];
                         for (int p = 0; p < oldGeneration.Length; p++) {
@@ -69,7 +70,7 @@ namespace GeNeural.Genetic {
                 }
                 T chosenOne = oldGeneration[fittestIndex];
                 Debug.WriteLine("Fittest index: {0} | {1}", fittestIndex, unfitnessOfPopulation[fittestIndex]);
-                Debug.WriteLine("Unfitness index: {0} | {1}", unfittestIndex, unfitnessOfPopulation[unfittestIndex]);
+                Debug.WriteLine("Unfittest index: {0} | {1}", unfittestIndex, unfitnessOfPopulation[unfittestIndex]);
                 double[] geneticDifference = new double[oldGeneration.Length];
                 for (int p = 0; p < oldGeneration.Length; p++) {
                     geneticDifference[p] = geneticDisimilarityFunction(oldGeneration[p], chosenOne, attributeDisimilarityFunction);

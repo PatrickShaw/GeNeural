@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeNeural.Genetic {
+namespace GeNeural.Genetics {
     public static partial class Preset {
         public static class AccuracyError {
             /// <summary>

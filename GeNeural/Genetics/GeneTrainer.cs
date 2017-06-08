@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeNeural.Genetic {
+namespace GeNeural.Genetics {
     public delegate T ReproductionFunction<T>(T parent1, T parent2);
     public delegate double AttributeDisimilarityFunction(double value1, double value2);
     public delegate double GeneticDisimilarityFunction<T>(
