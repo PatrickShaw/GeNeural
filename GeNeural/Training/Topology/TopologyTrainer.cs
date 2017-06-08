@@ -39,7 +39,7 @@ namespace GeNeural.Training.Topology {
             }
             return untrainedStubNetwork;
         }
-        public static double GetTotalError(NeuralNetwork trainedNetwork, double[][] inputs, double[][] desiredOutputs) {
+        public static double GetTotalError(INeuralNetwork trainedNetwork, double[][] inputs, double[][] desiredOutputs) {
             double error = 0;
             for (int t = 0; t < inputs.Length; t++) {
                 double[] actualOutputs = trainedNetwork.CalculateOutputs(inputs[t]);
@@ -53,8 +53,7 @@ namespace GeNeural.Training.Topology {
             double difference = desiredOutput - actualOutput;
             return difference * difference;
         }
-        public static void Train<T>(ISupervisedTrainer<T> trainer, T network, double[][] inputs, double[][] desiredOutputs) where T : NeuralNetwork {
-
+        public static void Train<T>(ISupervisedTrainer<T> trainer, T network, double[][] inputs, double[][] desiredOutputs) {
             for (int _ = 0; _ < 100; _++) {
                 for (int t = 0; t < inputs.Length; t++) {
                     for (int i = 0; i < 50; i++) {

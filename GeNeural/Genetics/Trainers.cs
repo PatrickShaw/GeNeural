@@ -8,7 +8,15 @@ using System.Threading.Tasks;
 
 namespace GeNeural.Genetics {
     public static partial class Trainers {
-        public static NeuralNetwork RandomSearch(Random random, double[][] testInputs, double[][] testOutputs, int[] neuralCounts, OutputAccuracyErrorFunction errorFunction, int populationCount = 10000000) {
+        public static NeuralNetwork RandomSearch(
+            Random random, 
+            double[][] testInputs, 
+            double[][] testOutputs, 
+            int[] neuralCounts, 
+            OutputAccuracyErrorFunction 
+            errorFunction, 
+            int populationCount = 10000000
+        ) {
             NeuralNetwork fittestNetwork = null;
             double fittestTotalError = double.MaxValue;
             for (int _ = 0; _ < populationCount; _++) {

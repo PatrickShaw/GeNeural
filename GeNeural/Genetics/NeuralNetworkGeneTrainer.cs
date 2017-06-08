@@ -10,7 +10,13 @@ namespace GeNeural.Genetics {
         public NeuralNetworkGeneTrainer(GeneticNeuralNetworkFacilitator[] initialPopulation, ReproductionFunction<GeneticNeuralNetworkFacilitator> reproductionFunction, GeneticDisimilarityFunction<GeneticNeuralNetworkFacilitator> geneticDisimilarityFunction, AttributeDisimilarityFunction attributeDisimilarityFunction, ReproduceNewGeneration<GeneticNeuralNetworkFacilitator> newGenerationFunction, OutputAccuracyErrorFunction getOutputAccuracyError, SelectPartnerFunction<GeneticNeuralNetworkFacilitator> selectPartnerFunction, EfficiencyErrorFunction efficiencyErrorFunction)
             : base(initialPopulation, reproductionFunction, geneticDisimilarityFunction, attributeDisimilarityFunction, newGenerationFunction, getOutputAccuracyError, selectPartnerFunction, efficiencyErrorFunction) { }
 
-        public override double[] UnfitnessOfPopulation(double[][] inputs, double[][] desiredOutputs, GeneticNeuralNetworkFacilitator[] population, EfficiencyErrorFunction efficiencyErrorFunction, OutputAccuracyErrorFunction outputAccuracyErrorFunction) {
+        public override double[] UnfitnessOfPopulation(
+            double[][] inputs, 
+            double[][] desiredOutputs, 
+            GeneticNeuralNetworkFacilitator[] population, 
+            EfficiencyErrorFunction efficiencyErrorFunction, 
+            OutputAccuracyErrorFunction outputAccuracyErrorFunction
+        ) {
             double[] unfitnessOfPopulation = new double[population.Length];
             double averageUnfitness = 0;
             for (int p = 0; p < population.Length; p++) {
