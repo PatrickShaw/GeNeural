@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeNeural.Genetic {
+namespace GeNeural.Genetics {
     public static partial class Trainers {
         public static NeuralNetwork RandomSearch(double[][] testInputs, double[][] testOutputs, int[] neuralCounts, OutputAccuracyErrorFunction errorFunction, int populationCount = 10000000) {
             NeuralNetwork fittestNetwork = null;

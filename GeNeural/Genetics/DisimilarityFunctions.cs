@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeNeural.Genetic {
+namespace GeNeural.Genetics {
     public static partial class Preset {
         public static class AttributeDisimilarity {
             public static double FlatDisimilarity(double attribute1, double attribute2) {
