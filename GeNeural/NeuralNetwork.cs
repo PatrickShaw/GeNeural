@@ -12,7 +12,7 @@ namespace GeNeural {
     using System.Text;
     using System.Threading.Tasks;
     public class NotEnoughLayersException : Exception { }
-    public class NeuralNetwork : IDeepCloneable<NeuralNetwork>, INeuralNetwork {
+    public class NeuralNetwork : IDeepCloneable<NeuralNetwork>, IClassifier {
         private const int INPUT_NEURON_WEIGHTS_COUNT = 2;
         private Neuron[][] neurons;
 
@@ -25,6 +25,7 @@ namespace GeNeural {
                 }
             }
         }
+
         public NeuralNetwork(int inputCount, int[] neuralCounts) {
             if (neuralCounts.Length < 1) { throw new Exception(); }
             neurons = new Neuron[neuralCounts.Length][];
@@ -40,6 +41,7 @@ namespace GeNeural {
                 }
             }
         }
+
         public int LayerCount {
             get { return neurons.Length; }
         }
@@ -69,9 +71,13 @@ namespace GeNeural {
             }
             return weights;
         }
-        public double[] CalculateOutputs(double[] inputs) {
+        public double[] CalculateRawOutputs(double[] inputs) {
             double[][] outputs = CalculateAllOutputs(inputs);
             return outputs[outputs.Length - 1];
+        }
+        public double[] Classify(double[] inputs) {
+            double[] outputs = this.CalculateRawOutputs(inputs);
+            return outputs;
         }
         public double[][] CalculateAllOutputs(double[] inputs) {
             double[][] outputs = new double[neurons.Length][];

@@ -50,7 +50,7 @@
     <Compile Include="IDeepCloneable.cs" />
     <Compile Include="Genetics\IGenetic.cs" />
     <Compile Include="Genetics\IMutatable.cs" />
-    <Compile Include="INeuralNetwork.cs" />
+    <Compile Include="IClassifier.cs" />
     <Compile Include="Training\ISupervisedTrainer.cs" />
     <Compile Include="NeuralNetwork.cs" />
     <Compile Include="Helpers.cs" />

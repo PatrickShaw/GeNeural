@@ -39,10 +39,10 @@ namespace GeNeural.Training.Topology {
             }
             return untrainedStubNetwork;
         }
-        public static double GetTotalError(INeuralNetwork trainedNetwork, double[][] inputs, double[][] desiredOutputs) {
+        public static double GetTotalError(IClassifier trainedNetwork, double[][] inputs, double[][] desiredOutputs) {
             double error = 0;
             for (int t = 0; t < inputs.Length; t++) {
-                double[] actualOutputs = trainedNetwork.CalculateOutputs(inputs[t]);
+                double[] actualOutputs = trainedNetwork.Classify(inputs[t]);
                 for (int o = 0; o < actualOutputs.Length; o++) {
                     error += GetError(desiredOutputs[t][o], actualOutputs[o]);
                 }

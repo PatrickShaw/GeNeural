@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 namespace GeNeural.Genetics {
-    public class GeneticNeuralNetworkFacilitator : IMutatable, IDeepCloneable<GeneticNeuralNetworkFacilitator> {
+    public class GeneticNeuralNetworkFacilitator : IMutatable, IDeepCloneable<GeneticNeuralNetworkFacilitator>, IClassifier {
         private double weightMutationVariance;
         private double weightMutationFactor;
 
@@ -17,7 +17,7 @@ namespace GeNeural.Genetics {
         // Adds round(-x to x) neurons per layer
         private double neuronMutationFactor;
         private NeuralNetwork network;
-        private Random rnd;
+        private readonly Random rnd;
         public GeneticNeuralNetworkFacilitator(
             NeuralNetwork network, 
             Random random, 
@@ -28,6 +28,7 @@ namespace GeNeural.Genetics {
             double neuronMutationVariance = 0.01,
             double neuronMutationFactor = 0.5
         ) {
+            Debug.Assert(random != null, "Random instance was null.");
             this.network = network;
             this.rnd = random;
             this.weightMutationVariance = weightMutationVariance;
@@ -38,6 +39,7 @@ namespace GeNeural.Genetics {
             this.neuronMutationFactor = neuronMutationFactor;
         }
         protected GeneticNeuralNetworkFacilitator(GeneticNeuralNetworkFacilitator parent) {
+            rnd = parent.rnd;
             network = parent.network.DeepClone();
             weightMutationVariance = parent.weightMutationVariance;
             layerMutationVariance = parent.layerMutationVariance;
@@ -81,7 +83,7 @@ namespace GeNeural.Genetics {
 
         public void Mutate(double mutationFactor = 1) {
             weightMutationFactor *= GetMultiplicativeMutableFactor(weightMutationVariance) + GetDeltaMutatableValue(0.000000000000001);
-            layerMutationFactor *= GetMultiplicativeMutableFactor(layerMutationVariance) + GetDeltaMutatableValue(0.000000000000001);
+            // layerMutationFactor *= GetMultiplicativeMutableFactor(layerMutationVariance) + GetDeltaMutatableValue(0.000000000000001);
             neuronMutationFactor *= GetMultiplicativeMutableFactor(neuronMutationVariance) + GetDeltaMutatableValue(0.000000000000001);
 
             MutateWeights();
@@ -145,7 +147,7 @@ namespace GeNeural.Genetics {
             }
         }
         public double GetMultiplicativeMutableFactor(double mutableFactor) {
-            return 1 + (mutableFactor - this.rnd.NextDouble() * mutableFactor * 2.0);
+           return 1 + (mutableFactor - this.rnd.NextDouble() * mutableFactor * 2.0);
         }
         public int GetRandomCount(double mutationFactor) {
             return (int)Math.Round(this.rnd.NextDouble() * mutationFactor);
@@ -158,5 +160,8 @@ namespace GeNeural.Genetics {
                 return -delta;
         }
 
+        public double[] Classify(double[] inputs) {
+            return this.network.Classify(inputs);
+        }
     }
 }

@@ -28,7 +28,7 @@ namespace GeNeural.Genetics {
                 network.RandomizeWeights(random, -maxWeightValue, maxWeightValue);
                 double totalError = 0;
                 for (int t = 0; t < testInputs.Length; t++) {
-                    double[] actualOutputs = network.CalculateOutputs(testInputs[t]);
+                    double[] actualOutputs = network.Classify(testInputs[t]);
                     for (int o = 0; o < actualOutputs.Length; o++) {
                         totalError += errorFunction(actualOutputs[o], testOutputs[t][o]);
                     }
