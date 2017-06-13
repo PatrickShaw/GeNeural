@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using NeuralCLI;
+using System;
 namespace GeNeural {
-    using GeNeural;
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     public class NotEnoughLayersException : Exception { }
     public class NeuralNetwork : IDeepCloneable<NeuralNetwork>, IClassifier {
         private const int INPUT_NEURON_WEIGHTS_COUNT = 2;
