@@ -1,7 +1,8 @@
-#include "stdafx.h"
-#include "NeuronCLI.h";
+#include "NeuronCLI.h"
+#include <memory>
 namespace NeuralCLI {
 	Neuron::Neuron(array<double>^ weights) {
+		System::Diagnostics::Debug::WriteLine("Creating neuron...");
 		std::vector<double> nativeWeights(weights->Length);
 		for each (double weight in weights) {
 			nativeWeights.push_back(weight);
@@ -9,13 +10,16 @@ namespace NeuralCLI {
 		this->neuron = new Neural::NeuronC(nativeWeights);
 	}
 
-	array<double>^ Neuron::GetWeights() {
-		std::vector<double> stdWeights = this->neuron->GetWeights();
-		array<double>^ cliWeights = gcnew array<double>(stdWeights.size());
-		for each (double weight in stdWeights) {
-			stdWeights.push_back(weight);
-		}
-		return cliWeights;
+	Neuron::~Neuron() { 
+		this->!Neuron(); 
+	}
+
+	Neuron::!Neuron() { 
+		delete neuron; 
+	}
+
+	double Neuron::GetWeight(size_t weightIndex) {
+		return this->neuron->GetWeight(weightIndex);
 	}
 
 	void Neuron::AddWeight(double weight) {
@@ -34,7 +38,7 @@ namespace NeuralCLI {
 		this->neuron->SetWeights(stdWeights);
 	}
 
-	double Neuron::GetNeuronWeight(int neuronIndex) {
+	double Neuron::GetNeuronWeight(size_t neuronIndex) {
 		return this->neuron->GetNeuronWeight(neuronIndex);
 	}
 
@@ -42,7 +46,7 @@ namespace NeuralCLI {
 		return this->neuron->GetThreshold();
 	}
 
-	void Neuron::SetWeight(int weightIndex, double weight) {
+	void Neuron::SetWeight(size_t weightIndex, double weight) {
 		this->neuron->SetWeight(weightIndex, weight);
 	}
 
@@ -50,7 +54,7 @@ namespace NeuralCLI {
 		this->neuron->SetThresholdWeight(weight);
 	}
 
-	void Neuron::SetNeuronWeight(int neuronIndex, double weight) {
+	void Neuron::SetNeuronWeight(size_t neuronIndex, double weight) {
 		this->neuron->SetNeuronWeight(neuronIndex, weight);
 	}
 
@@ -61,4 +65,17 @@ namespace NeuralCLI {
 		}
 		return this->neuron->GetOutput(stdInputs);
 	}	
+
+	size_t Neuron::GetWeightSize() {
+		return this->neuron->GetWeightSize();
+	}
+
+	array<double>^ Neuron::CloneWeights() {
+		size_t weightLength = this->neuron->GetWeightSize();
+		array<double>^ cliWeights = gcnew array<double>(weightLength);
+		for (int w = 0; w < weightLength; w++) {
+			cliWeights[w] = neuron->GetWeight(w);
+		}
+		return cliWeights;
+	}
 }

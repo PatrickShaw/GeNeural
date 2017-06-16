@@ -13,30 +13,42 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="neural">
+      <UniqueIdentifier>{8c4a68d4-19e0-4565-8a06-e8c4307efa84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="neural\neural">
+      <UniqueIdentifier>{949129ca-25d5-42b2-852d-744583e5c061}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="NeuronCLI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="neural\neural\MathHelper.h">
+      <Filter>neural\neural</Filter>
+    </ClInclude>
+    <ClInclude Include="neural\neural\Neuron.h">
+      <Filter>neural\neural</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AssemblyInfo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="NeuralCLI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NeuronCLI.h">
-      <Filter>Header Files</Filter>
+    <ClCompile Include="AssemblyInfo.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NeuronCLI.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="neural\neural\MathHelper.cpp">
+      <Filter>neural\neural</Filter>
+    </ClCompile>
+    <ClCompile Include="neural\neural\Neuron.cpp">
+      <Filter>neural\neural</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

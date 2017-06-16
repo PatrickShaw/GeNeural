@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NeuralCLI;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -136,8 +137,8 @@ namespace GeNeural.Genetics {
                 Neuron[] layer = network.GetLayer(l);
                 for (int n = 0; n < layer.Length; n++) {
                     Neuron neuron = layer[n];
-                    for (int w = 0; w < neuron.Weights.Length; w++) {
-                        double weight = neuron.Weights[w];
+                    for (ulong w = 0; w < neuron.GetWeightSize(); w++) {
+                        double weight = neuron.GetWeight(w);
                         double delta = GetDeltaMutatableValue(weightMutationFactor);
                         weight += delta;
                         //Debug.WriteLine("Changing weight by: {0}", delta);
