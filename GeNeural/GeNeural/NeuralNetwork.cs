@@ -14,29 +14,32 @@ namespace GeNeural {
             for (int l = 0; l < neurons.Length; l++) {
                 neurons[l] = new Neuron[network.neurons[l].Length];
                 for (int n = 0; n < neurons[l].Length; n++) {
-                    neurons[l][n] = new Neuron(network.neurons[l][n].CloneWeights());
+                    double[] clonedWeights = network.neurons[l][n].CloneWeights();
+                    // Debug.WriteLine("Cloned weight count: {0} vs {1}", network.neurons[l][n].GetWeightSize(), clonedWeights.Length);
+                    neurons[l][n] = new Neuron(clonedWeights);
                 }
             }
         }
 
         public NeuralNetwork(int inputCountTempShim, int[] neuralCounts) {
-            ulong inputCount = (ulong)inputCountTempShim;
+            ulong inputCount = (ulong)(inputCountTempShim);
+            // Debug.WriteLine("inputCount = {0}", inputCount);
             if (neuralCounts.Length < 1) { throw new Exception(); }
             neurons = new Neuron[neuralCounts.Length][];
             neurons[0] = new Neuron[neuralCounts[0]];
-            Debug.WriteLine("Creating input neurons...");
+            // Debug.WriteLine("Creating input neurons...");
             for (int n = 0; n < neurons[0].Length; n++) {
                 neurons[0][n] = new Neuron(GetInactiveNeuronWeights(inputCount + 1));
             }
-            Debug.WriteLine("Creating other neurons...");
+            // Debug.WriteLine("Creating other neurons...");
             for (int l = 1; l < neuralCounts.Length; l++) {
                 neurons[l] = new Neuron[neuralCounts[l]];
                 for (int n = 0; n < neurons[l].Length; n++) {
-                    double[] weights = GetInactiveNeuronWeights((ulong)neurons[l - 1].Length + 1);
+                    double[] weights = GetInactiveNeuronWeights((ulong)(neurons[l - 1].Length) + 1);
                     neurons[l][n] = new Neuron(weights);
                 }
             }
-            Debug.WriteLine("Created neurons.");
+            // Debug.WriteLine("Created neurons.");
         }
 
         public int LayerCount {
@@ -54,9 +57,9 @@ namespace GeNeural {
         public void RandomizeWeights(Random random, double min = 0, double max = 1) {
             for (int l = 0; l < neurons.Length; l++) {
                 for (int n = 0; n < neurons[l].Length; n++) {
-                    Debug.WriteLine("Randomizing weight (layer: {0}, neuron: {1})", l, n);
+                    // Debug.WriteLine("Randomizing weight (layer: {0}, neuron: {1})", l, n);
                     for (ulong w = 0; w < neurons[l][n].GetWeightSize(); w++) {
-                        Debug.WriteLine("Randomizing weight (layer: {0}, neuron: {1}, weight: {2})", l, n, w);
+                        // Debug.WriteLine("Randomizing weight (layer: {0}, neuron: {1}, weight: {2})", l, n, w);
                         neurons[l][n].SetWeight(w, min + random.NextDouble() * (max - min));
                     }
                 }
@@ -81,6 +84,7 @@ namespace GeNeural {
         public double[][] CalculateAllOutputs(double[] inputs) {
             double[][] outputs = new double[neurons.Length][];
             outputs[0] = new double[neurons[0].Length];
+            // Debug.WriteLine("[" + string.Join(", ", inputs) + "]");
             for (int n = 0; n < neurons[0].Length; n++) {
                 outputs[0][n] = neurons[0][n].GetOutput(inputs);
             }
@@ -102,7 +106,7 @@ namespace GeNeural {
         /// </summary>
         public void InsertAfterLayer(int layerIndex) {
             Neuron[] layer = new Neuron[neurons[layerIndex].Length];
-            for (ulong n = 0; n < (ulong)layer.Length; n++) {
+            for (ulong n = 0; n < (ulong)(layer.Length); n++) {
                 double[] inputWeights = new double[neurons[layerIndex].Length + 1];
 
                 Neuron newNeuron = new Neuron(inputWeights);
@@ -184,13 +188,13 @@ namespace GeNeural {
         /// This effectively adds a neuron without causing the network's behaviour/outputs to change.
         /// </summary>
         public void SplitNeuronNonDestructive(int layerIndex, int neuronIndexCSharp) {
-            ulong neuronIndex = (ulong)neuronIndexCSharp;
+            ulong neuronIndex = (ulong)(neuronIndexCSharp);
             Neuron duplicatedNeuron = new Neuron(neurons[layerIndex][neuronIndex].CloneWeights());
             if (layerIndex == neurons.Length - 1) {
                 AddOutputNeuron(duplicatedNeuron);
             } else {
                 double[] outputWeights = new double[neurons[layerIndex + 1].Length];
-                for (ulong n2 = 0; n2 < (ulong)neurons[layerIndex + 1].Length; n2++) {
+                for (ulong n2 = 0; n2 < (ulong)(neurons[layerIndex + 1].Length); n2++) {
                     double halvedWeight = neurons[layerIndex + 1][n2].GetNeuronWeight(neuronIndex);
                     outputWeights[n2] = halvedWeight;
                     neurons[layerIndex + 1][n2].SetNeuronWeight(neuronIndex, halvedWeight);

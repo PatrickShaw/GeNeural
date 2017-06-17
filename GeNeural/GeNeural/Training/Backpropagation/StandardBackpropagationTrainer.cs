@@ -20,12 +20,12 @@ namespace GeNeural.Training.Backpropagation {
                 weirdDThing[weirdDThing.Length - 1][n] = (neuronOutput - desiredOutputs[n]) * neuronOutput * (1 - neuronOutput);
             }
             for (int l = outputs.Length - 2; l >= 0; l--) {
-                ulong inputLength = (ulong)neuralNetwork.GetLayer(l).Length;
+                ulong inputLength = (ulong)(neuralNetwork.GetLayer(l).Length);
                 Neuron[] currentLayer = neuralNetwork.GetLayer(l + 1);
                 for (ulong n = 0; n < inputLength; n++) {
                     double neuronOutput = outputs[l][n];
                     double sumThing = 0;
-                    for (ulong n2 = 0; n2 < (ulong)currentLayer.Length; n2++) {
+                    for (ulong n2 = 0; n2 < (ulong)(currentLayer.Length); n2++) {
                         sumThing += weirdDThing[l + 1][n2] * currentLayer[n2].GetWeight(n);
                     }
                     weirdDThing[l][n] = sumThing * neuronOutput * (1 - neuronOutput);
@@ -42,7 +42,7 @@ namespace GeNeural.Training.Backpropagation {
                 newThresholdWeight -= learningRateFactor * weirdDThing[0][n] * -1;
                 neuron.SetWeight(0, newThresholdWeight);
                 // Modify the neuron to input weights
-                for (ulong n2 = 0; n2 < (ulong)inputs.Length; n2++) {
+                for (ulong n2 = 0; n2 < (ulong)(inputs.Length); n2++) {
                     ulong weightIndex = n2 + 1;
                     double newNeuronToInputWeight = neuron.GetWeight(weightIndex);
                     newNeuronToInputWeight -= learningRateFactor * weirdDThing[0][n] * inputs[n2];
@@ -53,12 +53,12 @@ namespace GeNeural.Training.Backpropagation {
             for (int l = 1; l < neuralNetwork.LayerCount; l++) {
                 Neuron[] currentLayer = neuralNetwork.GetLayer(l);
                 Neuron[] previousLayer = neuralNetwork.GetLayer(l - 1);
-                for (ulong n = 0; n < (ulong)currentLayer.Length; n++) {
+                for (ulong n = 0; n < (ulong)(currentLayer.Length); n++) {
                     Neuron neuron1 = currentLayer[n];
-                    double newThresholdWeight = neuron1.GetWeight(n);
+                    double newThresholdWeight = neuron1.GetWeight(0);
                     newThresholdWeight -= learningRateFactor * weirdDThing[l][n] * -1;
                     neuron1.SetWeight(0, newThresholdWeight);
-                    for (ulong n2 = 0; n2 < (ulong)previousLayer.Length; n2++) {
+                    for (ulong n2 = 0; n2 < (ulong)(previousLayer.Length); n2++) {
                         Neuron neuron2 = previousLayer[n2];
                         ulong weightIndex = n2 + 1;
                         double newNeuronToNeuronWeight = neuron2.GetWeight(weightIndex);

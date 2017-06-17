@@ -2,12 +2,14 @@
 #include <memory>
 namespace NeuralCLI {
 	Neuron::Neuron(array<double>^ weights) {
-		System::Diagnostics::Debug::WriteLine("Creating neuron...");
-		std::vector<double> nativeWeights(weights->Length);
-		for each (double weight in weights) {
-			nativeWeights.push_back(weight);
+		// System::Diagnostics::Debug::WriteLine("Creating neuron...");
+		std::shared_ptr<std::vector<double>> stdWeights = std::make_shared<std::vector<double>>(weights->Length);
+		for (size_t w = 0; w < stdWeights->size(); w++) {
+			stdWeights->at(w) = weights[w];
 		}
-		this->neuron = new Neural::NeuronC(nativeWeights);
+		// System::Diagnostics::Debug::WriteLine("Weight count: {0}", stdWeights->size());
+		this->neuron = new Neural::NeuronC(stdWeights);
+		// System::Diagnostics::Debug::WriteLine("Actual Weight count: {0}", neuron->GetWeightSize());
 	}
 
 	Neuron::~Neuron() { 
@@ -31,9 +33,9 @@ namespace NeuralCLI {
 	}
 
 	void Neuron::SetWeights(array<double>^ weights) {
-		std::vector<double> stdWeights(weights->Length);
-		for each (double weight in weights) {
-			stdWeights.push_back(weight);
+		std::shared_ptr<std::vector<double>> stdWeights = std::make_shared<std::vector<double>>(weights->Length);
+		for (size_t w = 0; w < stdWeights->size(); w++) {
+			stdWeights->at(w) = weights[w];
 		}
 		this->neuron->SetWeights(stdWeights);
 	}
@@ -47,7 +49,10 @@ namespace NeuralCLI {
 	}
 
 	void Neuron::SetWeight(size_t weightIndex, double weight) {
+		// System::Diagnostics::Debug::WriteLine("Original weight: {0}", this->neuron->GetWeight(weightIndex));
+		// System::Diagnostics::Debug::WriteLine("New weight: {0}", weight);
 		this->neuron->SetWeight(weightIndex, weight);
+		// System::Diagnostics::Debug::WriteLine("Actual weight: {0}", this->neuron->GetWeight(weightIndex));
 	}
 
 	void Neuron::SetThresholdWeight(double weight) {
@@ -60,10 +65,15 @@ namespace NeuralCLI {
 
 	double Neuron::GetOutput(array<double>^ inputs) {
 		std::vector<double> stdInputs(inputs->Length);
-		for each (double input in inputs) {
-			stdInputs.push_back(input);
+		for (int i = 0; i < stdInputs.size(); i++) {
+			stdInputs.at(i) = inputs[i];
 		}
-		return this->neuron->GetOutput(stdInputs);
+		double output = this->neuron->GetOutput(stdInputs);
+		/*for (size_t w = 0; w < this->neuron->GetWeightSize(); w++) {
+			System::Diagnostics::Debug::WriteLine("Actual neuron weight {0}: {1}", w, this->neuron->GetWeight(w));
+		}
+		System::Diagnostics::Debug::WriteLine("Received output: {0}", output);*/
+		return output;
 	}	
 
 	size_t Neuron::GetWeightSize() {
@@ -73,8 +83,9 @@ namespace NeuralCLI {
 	array<double>^ Neuron::CloneWeights() {
 		size_t weightLength = this->neuron->GetWeightSize();
 		array<double>^ cliWeights = gcnew array<double>(weightLength);
-		for (int w = 0; w < weightLength; w++) {
-			cliWeights[w] = neuron->GetWeight(w);
+		for (size_t w = 0; w < weightLength; w++) {
+			cliWeights[w] = this->neuron->GetWeight(w);
+			// System::Diagnostics::Debug::WriteLine("Cloned weight {0}: {1}", w, cliWeights[w]);
 		}
 		return cliWeights;
 	}

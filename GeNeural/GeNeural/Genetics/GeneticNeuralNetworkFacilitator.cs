@@ -84,18 +84,18 @@ namespace GeNeural.Genetics {
 
         public void Mutate(double mutationFactor = 1) {
             weightMutationFactor *= GetMultiplicativeMutableFactor(weightMutationVariance) + GetDeltaMutatableValue(0.000000000000001);
-            // layerMutationFactor *= GetMultiplicativeMutableFactor(layerMutationVariance) + GetDeltaMutatableValue(0.000000000000001);
+            layerMutationFactor *= GetMultiplicativeMutableFactor(layerMutationVariance) + GetDeltaMutatableValue(0.000000000000001);
             neuronMutationFactor *= GetMultiplicativeMutableFactor(neuronMutationVariance) + GetDeltaMutatableValue(0.000000000000001);
 
             MutateWeights();
             // Mutate layers count
-            MutateHiddenLayerCount();
+            // MutateHiddenLayerCount();
             // Mutate neuron count
-            MutateHiddenNeuronCount();
+            // MutateHiddenNeuronCount();
         }
         public void MutateHiddenLayerCount() {
             int numberOfLayersToClone = GetRandomCount(layerMutationFactor);
-            //Debug.WriteLine("Creating {0} more layers.", numberOfLayersToClone);
+            // Debug.WriteLine("Creating {0} more layers.", numberOfLayersToClone);
             if (this.rnd.Next(0, 2) == 1) {
                 for (int _ = 0; _ < numberOfLayersToClone; _++) {
                     int layerIndex = this.rnd.Next(0, network.LayerCount - 1);
