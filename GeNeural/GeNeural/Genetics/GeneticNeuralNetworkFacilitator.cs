@@ -155,10 +155,11 @@ namespace GeNeural.Genetics {
         }
         public double GetDeltaMutatableValue(double mutationFactor) {
             double delta = this.rnd.NextDouble() * mutationFactor;
-            if (this.rnd.Next(0, 2) == 1)
+            if (this.rnd.Next(0, 2) == 1) {
                 return delta;
-            else
+            } else {
                 return -delta;
+            }
         }
 
         public double[] Classify(double[] inputs) {
