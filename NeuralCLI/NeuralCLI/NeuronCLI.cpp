@@ -8,7 +8,7 @@ namespace NeuralCLI {
 			stdWeights->at(w) = weights[w];
 		}
 		// System::Diagnostics::Debug::WriteLine("Weight count: {0}", stdWeights->size());
-		this->neuron = new Neural::Neuron(stdWeights);
+		this->neuron = new neural::Neuron(stdWeights);
 		// System::Diagnostics::Debug::WriteLine("Actual Weight count: {0}", neuron->GetWeightSize());
 	}
 

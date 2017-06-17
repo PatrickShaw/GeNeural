@@ -5,7 +5,7 @@ namespace NeuralCLI {
 	using namespace System;
 	public ref class Neuron {
 	private:
-		Neural::Neuron* neuron;
+		neural::Neuron* neuron;
 	public:
 		Neuron(array<double>^ weights);	
 		~Neuron();
