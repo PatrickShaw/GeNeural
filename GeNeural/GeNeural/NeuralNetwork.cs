@@ -173,14 +173,9 @@ namespace GeNeural {
             neurons[layerIndex] = newNeuronLayer;
         }
         public void AddNonOutputNeuron(int layerIndex, Neuron neuron, double[] outputWeights) {
-            Neuron[] newNeuronLayer = new Neuron[neurons[layerIndex].Length + 1];
-            for (int n = 0; n < neurons[layerIndex].Length; n++) {
-                newNeuronLayer[n] = neurons[layerIndex][n];
-            }
-            newNeuronLayer[newNeuronLayer.Length - 1] = neuron;
-            neurons[layerIndex] = newNeuronLayer;
+            this->neurons->at(layerIndex)->push_back(neuron);
             for (int n2 = 0; n2 < neurons[layerIndex + 1].Length; n2++) {
-                neurons[layerIndex + 1][n2].AddWeight(outputWeights[n2]);
+                this->neurons->at(layerIndex + 1)->at(n2)->push_weight(outputWeights[n2]);
             }
         }
         /// <summary>

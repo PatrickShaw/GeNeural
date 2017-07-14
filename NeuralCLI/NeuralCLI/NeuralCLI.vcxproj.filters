@@ -33,6 +33,15 @@
     <ClInclude Include="neural\neural\Neuron.h">
       <Filter>neural\neural</Filter>
     </ClInclude>
+    <ClInclude Include="neural\neural\Classifier.h">
+      <Filter>neural\neural</Filter>
+    </ClInclude>
+    <ClInclude Include="neural\neural\NeuralNetwork.h">
+      <Filter>neural\neural</Filter>
+    </ClInclude>
+    <ClInclude Include="Conversion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NeuralCLI.cpp">
@@ -49,6 +58,18 @@
     </ClCompile>
     <ClCompile Include="neural\neural\Neuron.cpp">
       <Filter>neural\neural</Filter>
+    </ClCompile>
+    <ClCompile Include="neural\neural\NeuralNetwork.cpp">
+      <Filter>neural\neural</Filter>
+    </ClCompile>
+    <ClCompile Include="NeuralNetworkCLI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NeuralNetworkCLI.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Conversion.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

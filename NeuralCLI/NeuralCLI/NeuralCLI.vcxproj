@@ -133,21 +133,33 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Conversion.h" />
+    <ClInclude Include="neural\neural\Classifier.h" />
     <ClInclude Include="neural\neural\MathHelper.h" />
+    <ClInclude Include="neural\neural\NeuralNetwork.h" />
     <ClInclude Include="neural\neural\Neuron.h" />
+    <ClInclude Include="neural\neural\training\backpropagation\StandardBackpropagationTrainer.h" />
+    <ClInclude Include="neural\neural\training\SupervisedTrainer.h" />
+    <ClInclude Include="neural\neural\training\topology\TopologyTrainer.h" />
     <ClInclude Include="NeuronCLI.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="NeuralCLI.cpp" />
+    <ClCompile Include="NeuralNetworkCLI.h" />
+    <ClCompile Include="NeuralNetworkCLI.cpp" />
     <ClCompile Include="neural\neural\MathHelper.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
     </ClCompile>
+    <ClCompile Include="neural\neural\NeuralNetwork.cpp" />
     <ClCompile Include="neural\neural\Neuron.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
     </ClCompile>
+    <ClCompile Include="neural\neural\training\backpropagation\StandardBackpropagationTrainer.cpp" />
+    <ClCompile Include="neural\neural\training\topology\TopologyTrainer.cpp" />
     <ClCompile Include="NeuronCLI.cpp" />
+    <ClCompile Include="Conversion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

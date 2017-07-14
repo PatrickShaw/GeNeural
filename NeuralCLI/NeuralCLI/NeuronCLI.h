@@ -12,7 +12,7 @@ namespace NeuralCLI {
 		!Neuron();
 		double GetWeight(size_t weight);
 		void AddWeight(double weight);
-		void RemoveNeuronWeight(int neuronIndex);
+		void RemoveNeuronWeight(size_t neuronIndex);
 		void SetWeights(array<double>^ weights);
 		double GetNeuronWeight(size_t neuronIndex);
 		double GetThreshold();
