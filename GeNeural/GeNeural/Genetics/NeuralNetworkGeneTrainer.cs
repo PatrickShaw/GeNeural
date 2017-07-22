@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using NeuralCLI;
 namespace GeNeural.Genetics {
     public class NeuralNetworkGeneTrainer : GeneTrainer<GeneticNeuralNetworkFacilitator, NeuralNetwork> {
         public NeuralNetworkGeneTrainer(GeneticNeuralNetworkFacilitator[] initialPopulation, ReproductionFunction<GeneticNeuralNetworkFacilitator> reproductionFunction, GeneticDisimilarityFunction<GeneticNeuralNetworkFacilitator> geneticDisimilarityFunction, AttributeDisimilarityFunction attributeDisimilarityFunction, ReproduceNewGeneration<GeneticNeuralNetworkFacilitator> newGenerationFunction, OutputAccuracyErrorFunction getOutputAccuracyError, SelectPartnerFunction<GeneticNeuralNetworkFacilitator> selectPartnerFunction, EfficiencyErrorFunction efficiencyErrorFunction)
