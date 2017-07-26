@@ -152,12 +152,18 @@
     <ClCompile Include="neural\neural\MathHelper.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
     </ClCompile>
-    <ClCompile Include="neural\neural\NeuralNetwork.cpp" />
+    <ClCompile Include="neural\neural\NeuralNetwork.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
+    </ClCompile>
     <ClCompile Include="neural\neural\Neuron.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
     </ClCompile>
-    <ClCompile Include="neural\neural\training\backpropagation\StandardBackpropagationTrainer.cpp" />
-    <ClCompile Include="neural\neural\training\topology\TopologyTrainer.cpp" />
+    <ClCompile Include="neural\neural\training\backpropagation\StandardBackpropagationTrainer.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
+    </ClCompile>
+    <ClCompile Include="neural\neural\training\topology\TopologyTrainer.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
+    </ClCompile>
     <ClCompile Include="NeuronCLI.cpp" />
     <ClCompile Include="Conversion.cpp" />
   </ItemGroup>

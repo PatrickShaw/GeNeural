@@ -1,6 +1,6 @@
 #pragma once
 #include "neural/neural/Classifier.h"
-#include "neural/neural/NeuralNetwork.h";
+#include "neural/neural/NeuralNetwork.h"
 #include "NeuronCLI.h"
 namespace NeuralCLI {
   using namespace System;
@@ -10,15 +10,13 @@ namespace NeuralCLI {
   protected:
     NeuralNetwork(NeuralNetwork^ network);
   public:
-    NeuralNetwork(size_t inputCount, array<int>^ neuralCounts);
+    NeuralNetwork(size_t inputCount, array<size_t>^ neuralCounts);
     NeuralNetwork::~NeuralNetwork();
     NeuralNetwork::!NeuralNetwork();
     size_t layer_size();
-    array<Neuron^>^ layer(size_t layerIndex);
     double threshold_to_result_in_zero();
     double inactive_neuron_weight();
     void randomize_weights(double min, double max);
-    array<double>^ create_inactive_neuron_weights(size_t weightCount);
     array<double>^ raw_outputs(array<double>^ inputs);
     array<array<double>^>^ all_outputs(array<double>^ inputs);
     size_t neuron_size(size_t layerIndex);

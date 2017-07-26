@@ -19,6 +19,15 @@
     <Filter Include="neural\neural">
       <UniqueIdentifier>{949129ca-25d5-42b2-852d-744583e5c061}</UniqueIdentifier>
     </Filter>
+    <Filter Include="neural\neural\training">
+      <UniqueIdentifier>{187364c5-2b22-490e-999c-6bca4cca9f05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="neural\neural\training\topology">
+      <UniqueIdentifier>{69d9fdf7-c532-46ad-a610-878fe87f8e7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="neural\neural\training\backpropagation">
+      <UniqueIdentifier>{0acc14ad-87d5-4a43-8123-c228792dd019}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -41,6 +50,15 @@
     </ClInclude>
     <ClInclude Include="Conversion.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="neural\neural\training\SupervisedTrainer.h">
+      <Filter>neural\neural\training</Filter>
+    </ClInclude>
+    <ClInclude Include="neural\neural\training\backpropagation\StandardBackpropagationTrainer.h">
+      <Filter>neural\neural\training\backpropagation</Filter>
+    </ClInclude>
+    <ClInclude Include="neural\neural\training\topology\TopologyTrainer.h">
+      <Filter>neural\neural\training\topology</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +88,12 @@
     </ClCompile>
     <ClCompile Include="Conversion.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="neural\neural\training\backpropagation\StandardBackpropagationTrainer.cpp">
+      <Filter>neural\neural\training\backpropagation</Filter>
+    </ClCompile>
+    <ClCompile Include="neural\neural\training\topology\TopologyTrainer.cpp">
+      <Filter>neural\neural\training\topology</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

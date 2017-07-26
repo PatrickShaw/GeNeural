@@ -93,12 +93,8 @@
     <Compile Include="Genetics\Trainers.cs" />
     <Compile Include="IClassifier.cs" />
     <Compile Include="IDeepCloneable.cs" />
-    <Compile Include="NeuralNetwork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sorter.cs" />
-    <Compile Include="Training\Backpropagation\StandardBackpropagationTrainer.cs" />
-    <Compile Include="Training\ISupervisedTrainer.cs" />
-    <Compile Include="Training\Topology\TopologyTrainer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\NeuralCLI\NeuralCLI\NeuralCLI.vcxproj">

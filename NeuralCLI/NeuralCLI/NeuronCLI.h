@@ -4,10 +4,9 @@
 namespace NeuralCLI {
 	using namespace System;
 	public ref class Neuron {
-	private:
-		neural::Neuron* neuron;
 	public:
-		Neuron(array<double>^ weights);	
+		neural::Neuron* neuron;
+		Neuron(array<double>^ weights);
 		~Neuron();
 		!Neuron();
 		double GetWeight(size_t weight);

@@ -1,5 +1,6 @@
 #include "NeuronCLI.h"
 #include "Conversion.h"
+#include <vector>
 #include <memory>
 namespace NeuralCLI {
 	Neuron::Neuron(array<double>^ weights) {
@@ -51,7 +52,7 @@ namespace NeuralCLI {
 	}
 
 	double Neuron::GetOutput(array<double>^ inputs) {
-		return this->neuron->output(Conversion::array_to_vector(inputs));
+		return this->neuron->output(*Conversion::array_to_vector(inputs));
 	}	
 
 	size_t Neuron::GetWeightSize() {
