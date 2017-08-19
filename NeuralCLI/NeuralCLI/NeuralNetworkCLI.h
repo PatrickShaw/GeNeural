@@ -1,4 +1,5 @@
 #pragma once
+#include "stdafx.h"
 #include "neural/neural/Classifier.h"
 #include "neural/neural/NeuralNetwork.h"
 #include "NeuronCLI.h"
