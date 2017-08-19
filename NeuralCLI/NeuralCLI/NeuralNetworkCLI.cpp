@@ -12,7 +12,7 @@ namespace NeuralCLI {
   }
 
   NeuralNetwork::NeuralNetwork(NeuralNetwork ^ network){
-	  *this->network = *network->network->produce_new_neural_network();
+	this->network = new neural::NeuralNetwork(*network->network);
   }
 
   NeuralNetwork::NeuralNetwork(size_t inputCount, array<size_t>^ neuralCounts) {
@@ -82,11 +82,11 @@ namespace NeuralCLI {
   }
 
   void NeuralNetwork::add_output_neuron(Neuron^ neuron) {
-    this->network->add_output_neuron(std::allocate_shared<neural::Neuron>(*neuron->neuron));
+    this->network->add_output_neuron(std::make_shared<neural::Neuron>(*neuron->neuron));
   }
 
   void NeuralNetwork::add_non_output_neuron(size_t layerIndex, Neuron^ neuron, array<double>^ outputWeights) {
-    this->network->add_non_output_neuron(layerIndex, std::allocate_shared<neural::Neuron>(*neuron->neuron), *Conversion::array_to_vector(outputWeights));
+    this->network->add_non_output_neuron(layerIndex, std::make_shared<neural::Neuron>(*neuron->neuron), *Conversion::array_to_vector(outputWeights));
   }
 
   /**

@@ -77,9 +77,6 @@
     <ClCompile Include="neural\neural\Neuron.cpp">
       <Filter>neural\neural</Filter>
     </ClCompile>
-    <ClCompile Include="neural\neural\NeuralNetwork.cpp">
-      <Filter>neural\neural</Filter>
-    </ClCompile>
     <ClCompile Include="NeuralNetworkCLI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -94,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="neural\neural\training\topology\TopologyTrainer.cpp">
       <Filter>neural\neural\training\topology</Filter>
+    </ClCompile>
+    <ClCompile Include="neural\neural\NeuralNetwork.cpp">
+      <Filter>neural\neural\training</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
