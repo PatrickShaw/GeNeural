@@ -1,4 +1,5 @@
 ﻿using GeNeural;
+using NeuralCLI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,7 +13,7 @@ namespace GeNeural.Genetics {
             Random random, 
             double[][] testInputs, 
             double[][] testOutputs, 
-            int[] neuralCounts, 
+            ulong[] neuralCounts, 
             OutputAccuracyErrorFunction 
             errorFunction, 
             int populationCount = 10000000
@@ -23,12 +24,12 @@ namespace GeNeural.Genetics {
                 if ((_ % 100000) == 0) {
                     Debug.WriteLine(_);
                 }
-                NeuralNetwork network = new NeuralNetwork(testInputs[0].Length, neuralCounts);
-                double maxWeightValue = Math.Max(network.GetBiasToResultInZero(), network.GetInactiveNeuronInputWeight());
-                network.RandomizeWeights(random, -maxWeightValue, maxWeightValue);
+                NeuralNetwork network = new NeuralNetwork((ulong)testInputs[0].Length, neuralCounts);
+                double maxWeightValue = Math.Max(network.threshold_to_result_in_zero(), network.inactive_neuron_weight());
+                network.randomize_weights(-maxWeightValue, maxWeightValue);
                 double totalError = 0;
                 for (int t = 0; t < testInputs.Length; t++) {
-                    double[] actualOutputs = network.CalculateOutputs(testInputs[t]);
+                    double[] actualOutputs = network.classify(testInputs[t]);
                     for (int o = 0; o < actualOutputs.Length; o++) {
                         totalError += errorFunction(actualOutputs[o], testOutputs[t][o]);
                     }

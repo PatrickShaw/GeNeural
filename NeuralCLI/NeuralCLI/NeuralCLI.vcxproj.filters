@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="neural">
+      <UniqueIdentifier>{8c4a68d4-19e0-4565-8a06-e8c4307efa84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="neural\neural">
+      <UniqueIdentifier>{949129ca-25d5-42b2-852d-744583e5c061}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="neural\neural\training">
+      <UniqueIdentifier>{187364c5-2b22-490e-999c-6bca4cca9f05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="neural\neural\training\topology">
+      <UniqueIdentifier>{69d9fdf7-c532-46ad-a610-878fe87f8e7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="neural\neural\training\backpropagation">
+      <UniqueIdentifier>{0acc14ad-87d5-4a43-8123-c228792dd019}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NeuronCLI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="neural\neural\MathHelper.h">
+      <Filter>neural\neural</Filter>
+    </ClInclude>
+    <ClInclude Include="neural\neural\Neuron.h">
+      <Filter>neural\neural</Filter>
+    </ClInclude>
+    <ClInclude Include="neural\neural\Classifier.h">
+      <Filter>neural\neural</Filter>
+    </ClInclude>
+    <ClInclude Include="neural\neural\NeuralNetwork.h">
+      <Filter>neural\neural</Filter>
+    </ClInclude>
+    <ClInclude Include="Conversion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="neural\neural\training\SupervisedTrainer.h">
+      <Filter>neural\neural\training</Filter>
+    </ClInclude>
+    <ClInclude Include="neural\neural\training\backpropagation\StandardBackpropagationTrainer.h">
+      <Filter>neural\neural\training\backpropagation</Filter>
+    </ClInclude>
+    <ClInclude Include="neural\neural\training\topology\TopologyTrainer.h">
+      <Filter>neural\neural\training\topology</Filter>
+    </ClInclude>
+    <ClInclude Include="NeuralNetworkCLI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StandardBackpropagationTrainerCLI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SupervisedTrainerCLI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassifierCLI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="NeuralCLI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AssemblyInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NeuronCLI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="neural\neural\MathHelper.cpp">
+      <Filter>neural\neural</Filter>
+    </ClCompile>
+    <ClCompile Include="neural\neural\Neuron.cpp">
+      <Filter>neural\neural</Filter>
+    </ClCompile>
+    <ClCompile Include="NeuralNetworkCLI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="neural\neural\training\backpropagation\StandardBackpropagationTrainer.cpp">
+      <Filter>neural\neural\training\backpropagation</Filter>
+    </ClCompile>
+    <ClCompile Include="neural\neural\training\topology\TopologyTrainer.cpp">
+      <Filter>neural\neural\training\topology</Filter>
+    </ClCompile>
+    <ClCompile Include="StandardBackpropagationTrainerCLI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="neural\neural\NeuralNetwork.cpp">
+      <Filter>neural\neural</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="app.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="app.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

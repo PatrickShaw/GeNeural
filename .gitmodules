@@ -1,0 +1,3 @@
+[submodule "NeuralCLI/NeuralCLI/neural"]
+	path = NeuralCLI/NeuralCLI/neural
+	url = https://github.com/PatrickShaw/neural

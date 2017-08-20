@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NeuralCLI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,6 +40,7 @@ namespace GeNeural.Genetics {
 
                 NeuralNetwork babyNetwork = baby.Network;
                 NeuralNetwork mergingNetwork = mergerParent.Network;
+                /*
                 int l = 1;
                 while (l < babyNetwork.LayerCount && l < mergingNetwork.LayerCount) {
                     Neuron[] babyLayer = babyNetwork.GetLayer(l);
@@ -47,17 +49,17 @@ namespace GeNeural.Genetics {
                     while (n < babyLayer.Length && n < mergingLayer.Length) {
                         Neuron babyNeuron = babyLayer[n];
                         Neuron mergingNeuron = mergingLayer[n];
-                        double[] babyWeights = babyNeuron.Weights;
-                        double[] mergingWeights = mergingNeuron.Weights;
+                        double[] babyWeights = babyNeuron.CloneWeights();
+                        double[] mergingWeights = mergingNeuron.CloneWeights();
 
                         int w = 0;
-                        while (w < babyNeuron.Weights.Length && w < mergingNeuron.Weights.Length) {
+                        while (w < babyWeights.Length && w < mergingWeights.Length) {
                             //babyWeights[w] = PickAttributeCoinToss(babyWeights[w], mergingWeights[w]);
                         }
                         babyNeuron.SetWeights(babyWeights);
                     }
                     //babyNetwork.ReplaceLayer(l, babyLayer);
-                }
+                }*/
                 return baby;
             }
             private static T PickAttributeCoinToss<T>(Random random, T heads, T tails) {

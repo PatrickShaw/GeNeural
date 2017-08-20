@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using NeuralCLI;
 namespace GeNeural.Genetics {
     public class NeuralNetworkGeneTrainer : GeneTrainer<GeneticNeuralNetworkFacilitator, NeuralNetwork> {
         public NeuralNetworkGeneTrainer(GeneticNeuralNetworkFacilitator[] initialPopulation, ReproductionFunction<GeneticNeuralNetworkFacilitator> reproductionFunction, GeneticDisimilarityFunction<GeneticNeuralNetworkFacilitator> geneticDisimilarityFunction, AttributeDisimilarityFunction attributeDisimilarityFunction, ReproduceNewGeneration<GeneticNeuralNetworkFacilitator> newGenerationFunction, OutputAccuracyErrorFunction getOutputAccuracyError, SelectPartnerFunction<GeneticNeuralNetworkFacilitator> selectPartnerFunction, EfficiencyErrorFunction efficiencyErrorFunction)
@@ -24,7 +24,7 @@ namespace GeNeural.Genetics {
                 Stopwatch stopwatch = new Stopwatch();
                 for (int t = 0; t < inputs.Length; t++) {
                     stopwatch.Start();
-                    double[] actualOutputs = population[p].Network.CalculateOutputs(inputs[t]);
+                    double[] actualOutputs = population[p].Network.classify(inputs[t]);
                     stopwatch.Stop();
                     for (int o = 0; o < actualOutputs.Length; o++) {
                         double outputAccuracy = OutputAccuracyFunction(actualOutputs[o], desiredOutputs[t][o]);
