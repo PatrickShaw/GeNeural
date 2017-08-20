@@ -147,7 +147,7 @@
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="NeuralCLI.cpp" />
-    <ClCompile Include="NeuralNetworkCLI.h" />
+    <ClInclude Include="NeuralNetworkCLI.h" />
     <ClCompile Include="NeuralNetworkCLI.cpp" />
     <ClCompile Include="neural\neural\MathHelper.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
@@ -165,7 +165,6 @@
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
     </ClCompile>
     <ClCompile Include="NeuronCLI.cpp" />
-    <ClCompile Include="Conversion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

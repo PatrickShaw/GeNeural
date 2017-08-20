@@ -3,23 +3,23 @@
 #include "neural/neural/Classifier.h"
 #include "neural/neural/NeuralNetwork.h"
 #include "NeuronCLI.h"
+using namespace System;
 namespace NeuralCLI {
-  using namespace System;
   public ref class NeuralNetwork {
   private:
     neural::NeuralNetwork* network;
   protected:
     NeuralNetwork(NeuralNetwork^ network);
   public:
-    NeuralNetwork(size_t inputCount, array<size_t>^ neuralCounts);
+    NeuralNetwork(size_t inputCount, cli::array<size_t>^ neuralCounts);
     NeuralNetwork::~NeuralNetwork();
     NeuralNetwork::!NeuralNetwork();
     size_t layer_size();
     double threshold_to_result_in_zero();
     double inactive_neuron_weight();
     void randomize_weights(double min, double max);
-    array<double>^ raw_outputs(array<double>^ inputs);
-    array<array<double>^>^ all_outputs(array<double>^ inputs);
+	cli::array<double>^ raw_outputs(cli::array<double>^ inputs);
+	cli::array<cli::array<double>^>^ all_outputs(cli::array<double>^ inputs);
     size_t neuron_size(size_t layerIndex);
     /**
     * Inserts a layer into the given index with the same neuron count as the previous layer.
@@ -29,9 +29,9 @@ namespace NeuralCLI {
     void insert_after(size_t layerIndex);
     void remove_neuron(size_t layerIndex, size_t neuronIndex);
     void remove_layer(size_t layerIndex);
-    void insert_layer(size_t layerIndex, array<Neuron^>^ layer);
+    void insert_layer(size_t layerIndex, cli::array<Neuron^>^ layer);
     void add_output_neuron(Neuron^ neuron);
-    void add_non_output_neuron(size_t layerIndex, Neuron^ neuron, array<double>^ outputWeights);
+    void add_non_output_neuron(size_t layerIndex, Neuron^ neuron, cli::array<double>^ outputWeights);
     /**
     * Splits a neuron into 2 that produce half the output of the original neuron.
     * This effectively adds a neuron without causing the network's behaviour/outputs to change.
@@ -43,5 +43,6 @@ namespace NeuralCLI {
     */
     void add_neuron_non_destructive(size_t layerIndex);
     NeuralNetwork^ produce_new_neural_network();
+	cli::array<double>^ classify(cli::array<double>^ inputs);
   };
 }

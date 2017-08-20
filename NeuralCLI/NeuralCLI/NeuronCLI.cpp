@@ -3,7 +3,7 @@
 #include <vector>
 #include <memory>
 namespace NeuralCLI {
-	Neuron::Neuron(array<double>^ weights) {
+	Neuron::Neuron(cli::array<double>^ weights) {
 		this->neuron = new neural::Neuron(Conversion::array_to_vector(weights));
 	}
 
@@ -27,7 +27,7 @@ namespace NeuralCLI {
 		this->neuron->remove_neuron_weight(neuronIndex);
 	}
 
-	void Neuron::SetWeights(array<double>^ weights) {
+	void Neuron::SetWeights(cli::array<double>^ weights) {
 		this->neuron->set_weights(Conversion::array_to_vector(weights));
 	}
 
@@ -51,7 +51,7 @@ namespace NeuralCLI {
 		this->neuron->set_neuron_weight(neuronIndex, weight);
 	}
 
-	double Neuron::GetOutput(array<double>^ inputs) {
+	double Neuron::GetOutput(cli::array<double>^ inputs) {
 		return this->neuron->output(*Conversion::array_to_vector(inputs));
 	}	
 
@@ -59,9 +59,9 @@ namespace NeuralCLI {
 		return this->neuron->weight_size();
 	}
 
-	array<double>^ Neuron::CloneWeights() {
+	cli::array<double>^ Neuron::CloneWeights() {
 		size_t weightLength = this->neuron->weight_size();
-		array<double>^ cliWeights = gcnew array<double>(weightLength);
+		cli::array<double>^ cliWeights = gcnew cli::array<double>(weightLength);
 		for (size_t w = 0; w < weightLength; w++) {
 			cliWeights[w] = this->neuron->weight(w);
 		}

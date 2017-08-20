@@ -1,7 +1,7 @@
-#include "NeuralNetworkCLI.h"
-#include "Conversion.h"
 #include <vector>
 #include <memory>
+#include "NeuralNetworkCLI.h"
+#include "Conversion.h"
 namespace NeuralCLI {
   NeuralNetwork::~NeuralNetwork() {
     this->!NeuralNetwork();
@@ -11,11 +11,11 @@ namespace NeuralCLI {
     delete this->network;
   }
 
-  NeuralNetwork::NeuralNetwork(NeuralNetwork ^ network){
+  NeuralNetwork::NeuralNetwork(NeuralNetwork^ network){
 	this->network = new neural::NeuralNetwork(*network->network);
   }
 
-  NeuralNetwork::NeuralNetwork(size_t inputCount, array<size_t>^ neuralCounts) {
+  NeuralNetwork::NeuralNetwork(size_t inputCount, cli::array<size_t>^ neuralCounts) {
     this->network = new neural::NeuralNetwork(inputCount, *Conversion::array_to_vector(neuralCounts));
   }
 
@@ -35,12 +35,12 @@ namespace NeuralCLI {
     this->network->randomize_weights(min, max);
   }
 
-  array<double>^ NeuralNetwork::raw_outputs(array<double>^ inputs) {
+  cli::array<double>^ NeuralNetwork::raw_outputs(cli::array<double>^ inputs) {
     return Conversion::vector_to_array(*this->network->raw_outputs(*Conversion::array_to_vector(inputs)));
   }
 
-  array<array<double>^>^ NeuralNetwork::all_outputs(array<double>^ inputs) {
-	array<array<double>^>^ outputs = gcnew array<array<double>^>(inputs->Length);
+  cli::array<cli::array<double>^>^ NeuralNetwork::all_outputs(cli::array<double>^ inputs) {
+	  cli::array<cli::array<double>^>^ outputs = gcnew cli::array<cli::array<double>^>(inputs->Length);
     std::shared_ptr<std::vector<std::shared_ptr<std::vector<double>>>> stdOutputs = this->network->all_outputs(*Conversion::array_to_vector(inputs));
 	for (size_t l = 0; l < stdOutputs->size(); l++) {
 		std::shared_ptr<std::vector<double>> layerOutput = stdOutputs->at(l);
@@ -70,7 +70,7 @@ namespace NeuralCLI {
     this->network->remove_layer(layerIndex);
   }
 
-  void NeuralNetwork::insert_layer(size_t layerIndex, array<Neuron^>^ layer) {
+  void NeuralNetwork::insert_layer(size_t layerIndex, cli::array<Neuron^>^ layer) {
 	std::shared_ptr<std::vector<std::shared_ptr<neural::Neuron>>> stdLayer = std::make_shared<std::vector<std::shared_ptr<neural::Neuron>>>(layer->Length);
 	for (size_t i = 0; i < stdLayer->size(); i++) {
 		*stdLayer->at(i) = *layer[i]->neuron;
@@ -85,7 +85,7 @@ namespace NeuralCLI {
     this->network->add_output_neuron(std::make_shared<neural::Neuron>(*neuron->neuron));
   }
 
-  void NeuralNetwork::add_non_output_neuron(size_t layerIndex, Neuron^ neuron, array<double>^ outputWeights) {
+  void NeuralNetwork::add_non_output_neuron(size_t layerIndex, Neuron^ neuron, cli::array<double>^ outputWeights) {
     this->network->add_non_output_neuron(layerIndex, std::make_shared<neural::Neuron>(*neuron->neuron), *Conversion::array_to_vector(outputWeights));
   }
 
@@ -107,5 +107,9 @@ namespace NeuralCLI {
 
   NeuralNetwork^ NeuralNetwork::produce_new_neural_network() {
     return gcnew NeuralNetwork(this);
+  }
+
+  cli::array<double>^ NeuralNetwork::classify(cli::array<double>^ inputs) {
+	  return Conversion::vector_to_array(*this->network->classify(*Conversion::array_to_vector(inputs)));
   }
 }
