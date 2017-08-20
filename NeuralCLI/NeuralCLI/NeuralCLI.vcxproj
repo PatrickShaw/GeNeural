@@ -133,6 +133,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ClassifierCLI.h" />
     <ClInclude Include="Conversion.h" />
     <ClInclude Include="neural\neural\Classifier.h" />
     <ClInclude Include="neural\neural\MathHelper.h" />
@@ -143,10 +144,13 @@
     <ClInclude Include="neural\neural\training\topology\TopologyTrainer.h" />
     <ClInclude Include="NeuronCLI.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="StandardBackpropagationTrainerCLI.h" />
+    <ClInclude Include="SupervisedTrainerCLI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="NeuralCLI.cpp" />
+    <ClCompile Include="StandardBackpropagationTrainerCLI.cpp" />
     <ClInclude Include="NeuralNetworkCLI.h" />
     <ClCompile Include="NeuralNetworkCLI.cpp" />
     <ClCompile Include="neural\neural\MathHelper.cpp">

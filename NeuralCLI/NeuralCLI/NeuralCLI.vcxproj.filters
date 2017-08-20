@@ -63,6 +63,15 @@
     <ClInclude Include="NeuralNetworkCLI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="StandardBackpropagationTrainerCLI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SupervisedTrainerCLI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassifierCLI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NeuralCLI.cpp">
@@ -89,8 +98,11 @@
     <ClCompile Include="neural\neural\training\topology\TopologyTrainer.cpp">
       <Filter>neural\neural\training\topology</Filter>
     </ClCompile>
+    <ClCompile Include="StandardBackpropagationTrainerCLI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="neural\neural\NeuralNetwork.cpp">
-      <Filter>neural\neural\training</Filter>
+      <Filter>neural\neural</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -24,7 +24,7 @@ namespace GeNeural.Genetics {
                 Stopwatch stopwatch = new Stopwatch();
                 for (int t = 0; t < inputs.Length; t++) {
                     stopwatch.Start();
-                    double[] actualOutputs = population[p].Network.Classify(inputs[t]);
+                    double[] actualOutputs = population[p].Network.classify(inputs[t]);
                     stopwatch.Stop();
                     for (int o = 0; o < actualOutputs.Length; o++) {
                         double outputAccuracy = OutputAccuracyFunction(actualOutputs[o], desiredOutputs[t][o]);

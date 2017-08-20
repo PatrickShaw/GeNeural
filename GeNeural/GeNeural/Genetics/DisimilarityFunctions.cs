@@ -14,7 +14,7 @@ namespace GeNeural.Genetics {
         }
         public static class GeneticDisimilarity {
             public static double DefaultDisimilarity(GeneticNeuralNetworkFacilitator potentialCandidate1, GeneticNeuralNetworkFacilitator potentialCandidate2, AttributeDisimilarityFunction attributeDisimilarityFunction) {
-                double variance = 0;
+                /*double variance = 0;
                 NeuralNetwork nn1 = potentialCandidate1.Network;
                 NeuralNetwork nn2 = potentialCandidate2.Network;
                 int l = 0;
@@ -70,17 +70,18 @@ namespace GeNeural.Genetics {
                     }
                     l2++;
                 }
-                return variance;
+                return variance;*/
+                throw new NotImplementedException("TODO");
             }
 
-            private static double GetNeuronVsInactiveNeuronVariance(Neuron nn1Neuron, NeuralNetwork nn2, AttributeDisimilarityFunction attributeDisimilarityFunction) {
+            /*private static double GetNeuronVsInactiveNeuronVariance(Neuron nn1Neuron, NeuralNetwork nn2, AttributeDisimilarityFunction attributeDisimilarityFunction) {
                 double variance = 0;
                 double[] hypotheticalInactiveNeuronWeights = nn2.GetInactiveNeuronWeights(nn1Neuron.GetWeightSize());
                 for (ulong w = 0; w < nn1Neuron.GetWeightSize(); w++) {
                     variance += attributeDisimilarityFunction(nn1Neuron.GetWeight(w), hypotheticalInactiveNeuronWeights[w]);
                 }
                 return variance;
-            }
+            }*/
         }
     }
 }

@@ -6,15 +6,30 @@
 using namespace System;
 namespace NeuralCLI {
   public ref class NeuralNetwork {
-  private:
-    neural::NeuralNetwork* network;
   protected:
-    NeuralNetwork(NeuralNetwork^ network);
+	NeuralNetwork(NeuralNetwork^ network);
   public:
-    NeuralNetwork(size_t inputCount, cli::array<size_t>^ neuralCounts);
+	neural::NeuralNetwork* network;
+	NeuralNetwork(neural::NeuralNetwork& network);
+	NeuralNetwork(size_t inputCount, cli::array<size_t>^ neuralCounts);
     NeuralNetwork::~NeuralNetwork();
     NeuralNetwork::!NeuralNetwork();
+	/**
+	* The weight of a neuron.
+	* @param layerIndex
+	* The index of the layer that the weight resides within.
+	* @param neuronIndex
+	* The index of the neruon that the weight resides within.
+	* @param weightIndex
+	* The index of the weight for the given neuron (This includes the threshold weight).
+	*/
+	double weight(size_t layerIndex, size_t neuronIndex, size_t weightIndex);
+	/**
+	* Sets the weight for a given neuron on a given layer of the neural network.
+	*/
+	void set_weight(size_t layerIndex, size_t neuronIndex, size_t weightIndex, double weight);
     size_t layer_size();
+	size_t weight_size(size_t layerIndex, size_t neuronIndex);
     double threshold_to_result_in_zero();
     double inactive_neuron_weight();
     void randomize_weights(double min, double max);

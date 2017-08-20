@@ -40,6 +40,7 @@ namespace GeNeural.Genetics {
 
                 NeuralNetwork babyNetwork = baby.Network;
                 NeuralNetwork mergingNetwork = mergerParent.Network;
+                /*
                 int l = 1;
                 while (l < babyNetwork.LayerCount && l < mergingNetwork.LayerCount) {
                     Neuron[] babyLayer = babyNetwork.GetLayer(l);
@@ -58,7 +59,7 @@ namespace GeNeural.Genetics {
                         babyNeuron.SetWeights(babyWeights);
                     }
                     //babyNetwork.ReplaceLayer(l, babyLayer);
-                }
+                }*/
                 return baby;
             }
             private static T PickAttributeCoinToss<T>(Random random, T heads, T tails) {

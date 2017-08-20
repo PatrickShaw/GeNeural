@@ -41,7 +41,7 @@ namespace GeNeural.Genetics {
         }
         protected GeneticNeuralNetworkFacilitator(GeneticNeuralNetworkFacilitator parent) {
             rnd = parent.rnd;
-            network = parent.network.DeepClone();
+            network = parent.network.produce_new_neural_network();
             weightMutationVariance = parent.weightMutationVariance;
             layerMutationVariance = parent.layerMutationVariance;
             neuronMutationVariance = parent.neuronMutationVariance;
@@ -98,14 +98,14 @@ namespace GeNeural.Genetics {
             // Debug.WriteLine("Creating {0} more layers.", numberOfLayersToClone);
             if (this.rnd.Next(0, 2) == 1) {
                 for (int _ = 0; _ < numberOfLayersToClone; _++) {
-                    int layerIndex = this.rnd.Next(0, network.LayerCount - 1);
-                    network.InsertAfterLayer(layerIndex);
+                    ulong layerIndex = (ulong)this.rnd.Next(0, (int)network.layer_size() - 1);
+                    network.insert_after(layerIndex);
                 }
             } else {
                 for (int _ = 0; _ < numberOfLayersToClone; _++) {
-                    if (network.LayerCount <= 1) { break; }
-                    int layerIndex = this.rnd.Next(0, network.LayerCount - 1);
-                    network.RemoveLayer(layerIndex);
+                    if (network.layer_size() <= 1) { break; }
+                    ulong layerIndex = (ulong)this.rnd.Next(0, (int)network.layer_size() - 1);
+                    network.remove_layer(layerIndex);
                 }
             }
         }
@@ -114,35 +114,35 @@ namespace GeNeural.Genetics {
             //Debug.WriteLine("Creating {0} more neurons", numberOfNeuronsToClone);
             if (this.rnd.Next(0, 2) == 1) {
                 for (int _ = 0; _ < numberOfNeuronsToClone; _++) {
-                    if (network.LayerCount <= 1) {
+                    if (network.layer_size() <= 1) {
                         break;
                     }
-                    int layerIndex = this.rnd.Next(0, network.LayerCount - 1);
+                    ulong layerIndex = (ulong)this.rnd.Next(0, (int)network.layer_size() - 1);
                     //Debug.WriteLine("New neuron at layer: {0}", layerIndex);
-                    int neuronIndex = this.rnd.Next(0, network.GetLayer(layerIndex).Length);
-                    network.SplitNeuronNonDestructive(layerIndex, neuronIndex);
+                    ulong neuronIndex = (ulong)this.rnd.Next(0, (int)network.neuron_size(layerIndex));
+                    network.split_neuron_non_destructive(layerIndex, neuronIndex);
                 }
             } else {
                 for (int _ = 0; _ < numberOfNeuronsToClone; _++) {
-                    if (network.LayerCount <= 1) { break; }
-                    int layerIndex = this.rnd.Next(0, network.LayerCount - 1);
+                    if (network.layer_size() <= 1) { break; }
+                    ulong layerIndex = (ulong)this.rnd.Next(0, (int)network.layer_size() - 1);
                     //Debug.WriteLine("New neuron at layer: {0}", layerIndex);
-                    int neuronIndex = this.rnd.Next(0, network.GetLayer(layerIndex).Length);
-                    network.RemoveNeuron(layerIndex, neuronIndex);
+                    ulong neuronIndex = (ulong)this.rnd.Next(0, (int)network.neuron_size(layerIndex));
+                    network.remove_neuron(layerIndex, neuronIndex);
                 }
             }
         }
         public void MutateWeights() {
-            for (int l = 0; l < network.LayerCount; l++) {
-                Neuron[] layer = network.GetLayer(l);
-                for (int n = 0; n < layer.Length; n++) {
-                    Neuron neuron = layer[n];
-                    for (ulong w = 0; w < neuron.GetWeightSize(); w++) {
-                        double weight = neuron.GetWeight(w);
+            for (ulong l = 0; l < network.layer_size(); l++) {
+                ulong neuronCount = network.neuron_size(l);
+                for (ulong n = 0; n < neuronCount; n++) {
+                    ulong weightCount = network.weight_size(l, n);
+                    for (ulong w = 0; w < weightCount; w++) {
+                        double weight = network.weight(l, n, w);
                         double delta = GetDeltaMutatableValue(weightMutationFactor);
                         weight += delta;
                         //Debug.WriteLine("Changing weight by: {0}", delta);
-                        neuron.SetWeight(w, weight);
+                        network.set_weight(l, n, w, weight);
                     }
                 }
             }
@@ -163,7 +163,7 @@ namespace GeNeural.Genetics {
         }
 
         public double[] Classify(double[] inputs) {
-            return this.network.Classify(inputs);
+            return this.network.classify(inputs);
         }
     }
 }

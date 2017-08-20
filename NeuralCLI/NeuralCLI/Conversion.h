@@ -7,6 +7,17 @@ namespace NeuralCLI {
 	public ref class Conversion abstract sealed {
 		public:
 		template<typename T>
+		static std::shared_ptr<std::vector<std::vector<T>>> twod_array_to_twod_vector(
+			cli::array<cli::array<T>^>^ cliArray
+		) {
+			std::shared_ptr<std::vector<std::vector<T>>> stdVector = std::make_shared<std::vector<std::vector<T>>>(cliArray->Length);
+			for (size_t i = 0; i < stdVector->size(); i++) {
+				stdVector->at(i) = *Conversion::array_to_vector(cliArray[i]);
+			}
+			return stdVector;
+		}
+
+		template<typename T>
 		static std::shared_ptr<std::vector<T>> array_to_vector(cli::array<T>^ array) {
 			std::shared_ptr<std::vector<T>> stdVector = std::make_shared<std::vector<T>>(array->Length);
 			{

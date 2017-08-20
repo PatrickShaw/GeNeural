@@ -2,3 +2,4 @@
 #include "NeuronCLI.h"
 #include "NeuralNetworkCLI.h"
 #include "Conversion.h"
+#include "StandardBackpropagationTrainerCLI.h"

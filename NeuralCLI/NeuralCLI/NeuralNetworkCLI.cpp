@@ -1,14 +1,42 @@
 #include <vector>
 #include <memory>
+#include "neural/neural/NeuralNetwork.h"
 #include "NeuralNetworkCLI.h"
 #include "Conversion.h"
 namespace NeuralCLI {
+  NeuralNetwork::NeuralNetwork(neural::NeuralNetwork& network) {
+	this->network = new neural::NeuralNetwork(network);
+  }
+
   NeuralNetwork::~NeuralNetwork() {
     this->!NeuralNetwork();
   }
 
   NeuralNetwork::!NeuralNetwork() {
     delete this->network;
+  }
+  
+  size_t NeuralNetwork::weight_size(size_t layerIndex, size_t neuronIndex) {
+	return this->network->weight_size(layerIndex, neuronIndex);
+  }
+  /**
+  * The weight of a neuron.
+  * @param layerIndex
+  * The index of the layer that the weight resides within.
+  * @param neuronIndex
+  * The index of the neruon that the weight resides within.
+  * @param weightIndex
+  * The index of the weight for the given neuron (This includes the threshold weight).
+  */
+  double NeuralNetwork::weight(size_t layerIndex, size_t neuronIndex, size_t weightIndex) {
+	  return this->network->weight(layerIndex, neuronIndex, weightIndex);
+  }
+
+  /**
+  * Sets the weight for a given neuron on a given layer of the neural network.
+  */
+  void NeuralNetwork::set_weight(size_t layerIndex, size_t neuronIndex, size_t weightIndex, double weight) {
+	  this->network->set_weight(layerIndex, neuronIndex, weightIndex, weight);
   }
 
   NeuralNetwork::NeuralNetwork(NeuralNetwork^ network){
@@ -40,7 +68,7 @@ namespace NeuralCLI {
   }
 
   cli::array<cli::array<double>^>^ NeuralNetwork::all_outputs(cli::array<double>^ inputs) {
-	  cli::array<cli::array<double>^>^ outputs = gcnew cli::array<cli::array<double>^>(inputs->Length);
+	cli::array<cli::array<double>^>^ outputs = gcnew cli::array<cli::array<double>^>(inputs->Length);
     std::shared_ptr<std::vector<std::shared_ptr<std::vector<double>>>> stdOutputs = this->network->all_outputs(*Conversion::array_to_vector(inputs));
 	for (size_t l = 0; l < stdOutputs->size(); l++) {
 		std::shared_ptr<std::vector<double>> layerOutput = stdOutputs->at(l);
@@ -110,6 +138,8 @@ namespace NeuralCLI {
   }
 
   cli::array<double>^ NeuralNetwork::classify(cli::array<double>^ inputs) {
-	  return Conversion::vector_to_array(*this->network->classify(*Conversion::array_to_vector(inputs)));
+		shared_ptr<std::vector<double>> stdVector = Conversion::array_to_vector(inputs);
+		shared_ptr<std::vector<double>> stdOutputs = this->network->classify(*stdVector);
+    return Conversion::vector_to_array(*stdOutputs);
   }
 }
